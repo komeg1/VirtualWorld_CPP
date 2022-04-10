@@ -1,24 +1,75 @@
 #include "Animal.h"
 #include "GameFunctions.h"
-Animal::Animal(World* world, char sign, int strength, int initative, int lifeTime, pair<int, int> coordinates): 
-	Organism(world,sign,strength,initiative,lifeTime,coordinates)
+#include "World.h"
+#include "Wolf.h"
+#define FIELD '~'
+Animal::Animal(World* world, char sign, int strength, int initiative, int lifeTime, COORDS coordinates,bool doneTurn): 
+	Organism(world,sign,strength,initiative,lifeTime,coordinates,doneTurn)
 {
 }
-void Animal::action()
+void Animal::action(World* world)
 {
-	SetCoordinates(Move());
+		COORDS currentCoords = GetCoordinates();
+		COORDS newCoords = RandomCoords(currentCoords);
+		int x = newCoords.first;
+		int y = newCoords.second;
+		char nextField = world->worldBoard[y][x];
+		char currentAnimal = GetSign();
+		vector<Organism*> creaturesVec = world->GetCreaturesArray();
+		//cout << "NOWE KOORDYNATY "<<currentAnimal<<" x: " << x << " y: " << y<< " ZNAK: " << nextField << endl;
+		if (nextField != FIELD)
+		{
+			if (collision(currentAnimal, nextField, world, currentCoords,newCoords))
+			{
+				for (int i = 0; i < creaturesVec.size(); i++)
+				{
+					if (creaturesVec[i]->GetCoordinates() == newCoords)
+					{
+						creaturesVec.erase(creaturesVec.begin()+(i));
+						world->SetCreaturesArray(creaturesVec);
+						SetCoordinates(newCoords);
+						UpdateLifeTime();
+						return;
+					}
+				}
+			}
+		}
+		else
+		SetCoordinates(newCoords);
+		UpdateLifeTime();
+	}
+
+
+
+
+bool Animal::collision(char movingAnimal, char waitingAnimal,World* world,COORDS currentCoords, COORDS newCoords)
+{
+	if (movingAnimal != waitingAnimal)
+	{
+		vector<Organism*> temp = world->GetCreaturesArray();
+		int initiativeA = 0;
+		int initiativeB = 0;
+		for (int i = 0; i < temp.size(); i++)
+		{
+			if (temp[i]->GetCoordinates() == currentCoords)
+			{
+				initiativeA = temp[i]->GetInitiative();
+				cout << "Posiadam A: " << initiativeA << endl;
+			}
+			if (temp[i]->GetCoordinates() == newCoords)
+			{
+				initiativeB = temp[i]->GetInitiative();
+				cout << "Posiadam B: " << initiativeB << endl;
+			}
+		}
+		return initiativeA > initiativeB;
+	}
+	return 0;
+		
+
 }
 
-void Animal::collision()
-{
-}
 
-pair <int,int> Animal::Move()
-{
-	pair<int, int> coords = RandomCoords(GetCoordinates());
-	cout << coords.first << " " << coords.second<<endl;
-	return coords;
-}
 
 Animal::~Animal()
 {

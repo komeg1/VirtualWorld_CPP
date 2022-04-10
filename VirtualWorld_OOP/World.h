@@ -18,7 +18,7 @@ public:
 	int GetWorldY() const;
 	vector<Organism*> GetCreaturesArray() const;
 	void SetCreaturesArray(vector<Organism*> creatures);
-	void nextTurn(World* world,vector<Organism*>creaturesArray);
+	void nextTurn(World* world);
 	void draw(char* worldBoard[]);
 	void updateBoard(char* worldBoard[], vector<Organism*> creaturesArray);
 

@@ -143,6 +143,7 @@
     <ClCompile Include="GameFunctions.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Organism.cpp" />
+    <ClCompile Include="Sheep.cpp" />
     <ClCompile Include="Wolf.cpp" />
     <ClCompile Include="World.cpp" />
   </ItemGroup>
@@ -150,6 +151,7 @@
     <ClInclude Include="Animal.h" />
     <ClInclude Include="GameFunctions.h" />
     <ClInclude Include="Organism.h" />
+    <ClInclude Include="Sheep.h" />
     <ClInclude Include="Wolf.h" />
     <ClInclude Include="World.h" />
   </ItemGroup>

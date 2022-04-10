@@ -1,8 +1,8 @@
 #include "Wolf.h"
 #include "World.h"
-Wolf::Wolf(int x, int y, World* world): Animal(world,'@',5,9,0,make_pair(x,y))
+Wolf::Wolf(int x, int y, World* world): Animal(world,'@',5,9,0,make_pair(x,y),0)
 {
-	world->worldBoard[x][y] = sign;
+	world->worldBoard[y][x] = sign;
 	vector<Organism*> temp = world->GetCreaturesArray();
 	temp.push_back(this);
 	world->SetCreaturesArray(temp);
@@ -30,15 +30,15 @@ int Wolf::GetlifeTime()const
 	return lifeTime;
 }
 
-pair<int, int> Wolf::GetCoordinates() const
+COORDS Wolf::GetCoordinates() const
 {
 	return coordinates;
 }
 
-void Wolf::collision()
-{
-	printf("X");
+bool Wolf::GetTurn() const {
+	return doneTurn;
 }
+
 
 Wolf::~Wolf()
 {

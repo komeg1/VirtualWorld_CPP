@@ -1,9 +1,9 @@
 #pragma once
 #include "Animal.h"
-class Wolf : public Animal
+class Sheep : public Animal
 {
 public:
-	Wolf(int x,int y, World* world);
+	Sheep(int x, int y, World* world);
 	char GetSign() const override;
 	bool GetTurn() const override;
 	int GetStrength()const override;
@@ -12,7 +12,6 @@ public:
 	COORDS GetCoordinates() const override;
 
 
-	~Wolf() override;
-
+	~Sheep() override;
 };
 
