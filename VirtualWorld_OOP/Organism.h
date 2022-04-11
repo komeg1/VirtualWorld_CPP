@@ -5,7 +5,7 @@
 #include <algorithm>
 #include <utility>
 #include "GameFunctions.h"
-#define COORDS pair<int,int>
+
 using namespace std;
 class World;
 class Organism

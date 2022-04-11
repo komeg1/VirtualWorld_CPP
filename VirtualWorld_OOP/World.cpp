@@ -1,11 +1,12 @@
 ﻿#include "World.h"
 #include <conio.h>
+
 World::World(int x, int y) : world_x(x), world_y(y)
 {
 	worldBoard = new char* [x];
 	for (int i = 0; i < x; i++)
 		worldBoard[i] = new char[y];
-	updateBoard(worldBoard, this->creaturesArray);
+	updateBoard();
 
 }
 
@@ -15,7 +16,7 @@ World::World(): world_x(20), world_y(20)
 	worldBoard = new char* [world_x];
 	for (int i = 0; i < world_y; i++)
 		worldBoard[i] = new char[world_y];
-	updateBoard(worldBoard,this->creaturesArray);
+	updateBoard();
 }
 
 int World::GetWorldX() const
@@ -33,6 +34,11 @@ vector<Organism*> World::GetCreaturesArray() const
 	return creaturesArray;
 }
 
+vector<string> World::GetLogs() const
+{
+	return logs;
+}
+
 
 
 void World::SetCreaturesArray(vector<Organism*> creatures)
@@ -40,24 +46,33 @@ void World::SetCreaturesArray(vector<Organism*> creatures)
 	this->creaturesArray = creatures;
 }
 
-void World::nextTurn(World* world) {
-	sort(world->creaturesArray.begin(), world->creaturesArray.end(),&comparator);
+void World::SetLogs(vector<string> logs)
+{
+	this->logs = logs;
+}
+
+void World::nextTurn() {
+	sort(creaturesArray.begin(), creaturesArray.end(),&comparator);
 	//for (int i = 0; i < world->creaturesArray.size(); i++)
 		//cout << world->creaturesArray[i]->GetSign() <<" x: "<<world->creaturesArray[i]->GetCoordinates().first<<" y: "<< world->creaturesArray[i]->GetCoordinates().second<<" Inicjatywa: "<<world->creaturesArray[i]->GetInitiative()<<" Lifetime: "<<world->creaturesArray[i]->GetlifeTime()<<  endl;
 		//cout << endl;
-	draw(world->worldBoard);
-	for (int i = 0; i < world->creaturesArray.size(); i++)
+	
+	for (int i = 0; i < creaturesArray.size(); i++)
 	{
-			world->creaturesArray[i]->action(world);
-			updateBoard(world->worldBoard, world->creaturesArray);
+			creaturesArray[i]->action(this);
+			updateBoard();
 			
 	}
+	draw();
+	for (int i = 0; i < logs.size(); i++)
+	{
+		cout << i + 1 << ". " << logs[i] << "\n";
+	}
+	logs.clear();
 	
 	
 	
 	
-	for (int i = 0; i < world->creaturesArray.size(); i++)
-		world->creaturesArray[i]->SetTurn(0);
 
 
 }
@@ -78,8 +93,8 @@ void World::draw()
 void World::updateBoard()
 {
 	for (int i = 0; i < GetWorldX(); i++)
-		for (int j = 0; j < 20; j++)
-			worldBoard[i][j] = '~';
+		for (int j = 0; j < GetWorldY(); j++)
+			worldBoard[i][j] = FIELD;
 
 	for (Organism* a : creaturesArray)
 	{

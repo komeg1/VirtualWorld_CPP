@@ -8,6 +8,7 @@ private:
 	int world_x;
 	int world_y;
 	vector <Organism*> creaturesArray;
+	vector <string> logs;
 	
 public:
 	char** worldBoard;
@@ -17,10 +18,12 @@ public:
 	int GetWorldX() const;
 	int GetWorldY() const;
 	vector<Organism*> GetCreaturesArray() const;
+	vector<string> GetLogs()const;
 	void SetCreaturesArray(vector<Organism*> creatures);
-	void nextTurn(World* world);
-	void draw(char* worldBoard[]);
-	void updateBoard(char* worldBoard[], vector<Organism*> creaturesArray);
+	void SetLogs(vector<string> logs);
+	void nextTurn();
+	void draw();
+	void updateBoard();
 
 
 	~World();

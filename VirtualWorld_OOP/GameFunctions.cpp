@@ -2,19 +2,13 @@
 #include "World.h"
 #include <Windows.h>
 #include "Wolf.h"
+#include "Fox.h"
 #include "Sheep.h"
 #include <conio.h>
-#define worldX 19
-#define worldY 19
-#define NAME  cout << "                                    Tomasz Krezymon, ETI, Informatyka, 189642\n"
+#include <sstream>
 using namespace std;
-enum directions{
-    NORTH =1,
-    EAST,
-    SOUTH,
-    WEST
-};
-pair<int, int> RandomCoords(COORDS coords)
+
+COORDS RandomCoords(COORDS coords)
 {
     int randomNum = (rand() % 4) + 1;
     bool av_dir[5];
@@ -100,16 +94,21 @@ void CreateGame() {
     
     int wolfAmount = 0;
     int sheepAmount = 0;
+    int foxAmount = 0;
     cout << "Podaj liczbê wilków: ";
     cin >> wolfAmount;
     system("CLS");
     NAME;
     cout << "Podaj liczbê owiec: ";
     cin >> sheepAmount;
-    StartSimulation(PrepareWorld(wolfAmount,sheepAmount));
+    system("CLS");
+    NAME;
+    cout << "Podaj liczbê lisów: ";
+    cin >> foxAmount;
+    StartSimulation(PrepareWorld(wolfAmount,sheepAmount,foxAmount));
 }
 
-World* PrepareWorld(int wolfAmount, int sheepAmount) {
+World* PrepareWorld(int wolfAmount, int sheepAmount, int foxAmount) {
     World* world = new World();
     for (int i = 0; i < wolfAmount; i++)
     {
@@ -119,18 +118,21 @@ World* PrepareWorld(int wolfAmount, int sheepAmount) {
     {
         Sheep* x = new Sheep(rand() % 20 + 1, rand() % 19 + 1, world);
     }
+    for (int i = 0; i < foxAmount; i++)
+    {
+        Fox* x = new Fox(rand() % 20 + 1, rand() % 19 + 1, world);
+    }
     return world;
 }
 
 void StartSimulation(World* world)
 {
     int c = 0;
-    world->draw(world->worldBoard);
+    system("CLS");
+    NAME;
+    world->draw();
     while (1)
     {
-
-        world->nextTurn(world);
-
         while (1)
         {
             c = _getch();
@@ -140,10 +142,32 @@ void StartSimulation(World* world)
 
                 system("CLS");
                 NAME;
+                world->nextTurn();
                 break;
             }
         }
     }
+}
+
+
+void CreateLog(Organism* a, Organism* b, int log_type, World* world)
+{
+    ostringstream tmpmsg;
+    string finalmsg;
+    char ac = a->GetSign();
+    char bc = b->GetSign();
+    switch (log_type)
+    {
+    case KILL:
+        tmpmsg << "ZABOJSTWO: '" << ac << "' zabil '" << bc <<
+            "' na polu x: " << STR(b->GetCoordinates().second) << " y: " + STR(b->GetCoordinates().first);
+        finalmsg = tmpmsg.str();
+        break;
+    }
+  
+    vector<string> tempLog = world->GetLogs();
+    tempLog.push_back(finalmsg);
+    world->SetLogs(tempLog);
 }
 
 

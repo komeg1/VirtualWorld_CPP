@@ -140,6 +140,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Animal.cpp" />
+    <ClCompile Include="Fox.cpp" />
     <ClCompile Include="GameFunctions.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Organism.cpp" />
@@ -149,7 +150,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animal.h" />
+    <ClInclude Include="Fox.h" />
     <ClInclude Include="GameFunctions.h" />
+    <ClInclude Include="Definitions.h" />
     <ClInclude Include="Organism.h" />
     <ClInclude Include="Sheep.h" />
     <ClInclude Include="Wolf.h" />
