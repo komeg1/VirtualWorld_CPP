@@ -1,16 +1,16 @@
 ﻿#include "World.h"
 #include <conio.h>
-
-World::World(int x, int y) : world_x(x), world_y(y)
+#include <Windows.h>
+World::World(int x, int y) : world_x(x), world_y(y), turn(1)
 {
-	worldBoard = new char* [x];
-	for (int i = 0; i < x; i++)
-		worldBoard[i] = new char[y];
+	worldBoard = new char* [world_x];
+	for (int i = 0; i < world_y; i++)
+		worldBoard[i] = new char[world_y];
 	updateBoard();
 
 }
 
-World::World(): world_x(20), world_y(20)
+World::World(): world_x(20), world_y(20), turn(1)
 {
 
 	worldBoard = new char* [world_x];
@@ -28,7 +28,9 @@ int World::GetWorldY() const
 {
 	return world_y;
 }
-
+int World::GetTurn() const {
+	return turn;
+}
 vector<Organism*> World::GetCreaturesArray() const
 {
 	return creaturesArray;
@@ -51,24 +53,32 @@ void World::SetLogs(vector<string> logs)
 	this->logs = logs;
 }
 
+//Sortowanie organizmów po inicjatywie/długosci życia
+void World::SortCreaturesArray() {
+	sort(creaturesArray.begin(), creaturesArray.end(), &comparator);
+}
+
 void World::nextTurn() {
-	sort(creaturesArray.begin(), creaturesArray.end(),&comparator);
-	//for (int i = 0; i < world->creaturesArray.size(); i++)
-		//cout << world->creaturesArray[i]->GetSign() <<" x: "<<world->creaturesArray[i]->GetCoordinates().first<<" y: "<< world->creaturesArray[i]->GetCoordinates().second<<" Inicjatywa: "<<world->creaturesArray[i]->GetInitiative()<<" Lifetime: "<<world->creaturesArray[i]->GetlifeTime()<<  endl;
-		//cout << endl;
+	SortCreaturesArray();
 	
+	string turnLog = "Tura " + STR(turn);
+	logs.push_back(turnLog);
 	for (int i = 0; i < creaturesArray.size(); i++)
 	{
 			creaturesArray[i]->action(this);
+			creaturesArray[i]->SetIterator(this);
 			updateBoard();
-			
+			system("CLS");
+			draw();
+			for (int i = 0; i < logs.size(); i++)
+			{
+				cout << i + 1 << ". " << logs[i] << "\n";
+			}
+			Sleep(200);
+
 	}
-	draw();
-	for (int i = 0; i < logs.size(); i++)
-	{
-		cout << i + 1 << ". " << logs[i] << "\n";
-	}
-	logs.clear();
+	turn++;
+
 	
 	
 	

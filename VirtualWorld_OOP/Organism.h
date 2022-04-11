@@ -17,16 +17,18 @@ protected:
 	int initiative;
 	int lifeTime;
 	bool doneTurn;
-	pair <int, int> coordinates;
+	COORDS coordinates;
+	vector<Organism*>::iterator it;
 
 public:
 	Organism(World *world, char sign, int strength, int initative, int lifeTime, COORDS coordinates, bool doneTurn);
-	virtual char GetSign() const =0;
-	virtual int GetStrength() const=0;
-	virtual int GetInitiative() const=0;
-	virtual int GetlifeTime() const=0;
-	virtual bool GetTurn() const = 0;
-	virtual COORDS GetCoordinates() const=0;
+	char GetSign()const;
+	int GetStrength()const;
+	int GetInitiative()const;
+	int GetlifeTime()const;
+	void SetIterator(World* world);
+	bool GetTurn()const;
+	COORDS GetCoordinates()const;
 
 	void SetCoordinates(pair<int, int> coordinates);
 	void SetTurn(bool a);

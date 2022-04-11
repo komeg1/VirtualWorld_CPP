@@ -6,9 +6,13 @@ Sheep::Sheep(int x, int y, World* world) : Animal(world, 'S', 4, 4, 0, make_pair
 	vector<Organism*> temp = world->GetCreaturesArray();
 	temp.push_back(this);
 	world->SetCreaturesArray(temp);
+	SetIterator(world);
 }
 
 	Sheep::~Sheep()
 	{
+		cout << "WIELKOSC WEKTORA: " << world->GetCreaturesArray().size() << " ITERATOR: " <<distance(it,world->GetCreaturesArray().begin()) << endl;
+		world->GetCreaturesArray().erase(this->it);
+		delete this;
 	}
 

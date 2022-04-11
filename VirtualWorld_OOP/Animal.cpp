@@ -9,7 +9,7 @@ Animal::Animal(World* world, char sign, int strength, int initiative, int lifeTi
 void Animal::action(World* world)
 {
 		COORDS currentCoords = GetCoordinates();
-		COORDS newCoords = RandomCoords(currentCoords);
+		COORDS newCoords = RandomCoords(currentCoords,world);
 		int x = newCoords.first;
 		int y = newCoords.second;
 		char nextField = world->worldBoard[y][x];
@@ -27,8 +27,7 @@ void Animal::action(World* world)
 						if (creaturesVec[i]->GetCoordinates() == newCoords)
 						{
 							CreateLog(this, creaturesVec[i], KILL, world);
-							creaturesVec.erase(creaturesVec.begin() + (i));
-							world->SetCreaturesArray(creaturesVec);
+							creaturesVec[i]->~Organism();
 							SetCoordinates(newCoords);
 							UpdateLifeTime();
 							return;
@@ -39,13 +38,19 @@ void Animal::action(World* world)
 				{
 					for (int i = 0; i < creaturesVec.size(); i++)
 					{
-						if (creaturesVec[i]->GetCoordinates() == currentCoords)
+						if (creaturesVec[i]->GetCoordinates() == this->coordinates)
 						{
-							CreateLog(creaturesVec[i], this, KILL, world);
-							creaturesVec.erase(creaturesVec.begin() + (i));
-							world->SetCreaturesArray(creaturesVec);
-							UpdateLifeTime();
-							return;
+							creaturesVec[i]->~Organism();
+							for (int j = 0; j < creaturesVec.size(); j++)
+							{
+								if (creaturesVec[i]->GetCoordinates() == newCoords)
+								{
+									CreateLog(creaturesVec[i], this, KILL, world);
+									return;
+								}
+							}
+							
+							
 						}
 					}
 				}
@@ -90,36 +95,6 @@ bool Animal::collision(char movingAnimal, char waitingAnimal,World* world,COORDS
 		
 
 }
-
-char Animal::GetSign()const
-{
-	return sign;
-}
-
-int Animal::GetStrength()const
-{
-	return strength;
-}
-
-int Animal::GetInitiative()const
-{
-	return initiative;
-}
-
-int Animal::GetlifeTime()const
-{
-	return lifeTime;
-}
-
-COORDS Animal::GetCoordinates() const
-{
-	return coordinates;
-}
-
-bool Animal::GetTurn() const {
-	return doneTurn;
-}
-
 Animal::~Animal()
 {
 }

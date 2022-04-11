@@ -6,12 +6,13 @@ Fox::Fox(int x, int y, World* world) : Animal(world, 'F', 7, 3, 0, make_pair(x, 
 	vector<Organism*> temp = world->GetCreaturesArray();
 	temp.push_back(this);
 	world->SetCreaturesArray(temp);
+	SetIterator(world);
 }
 
 void Fox::action(World* world)
 {
 	COORDS currentCoords = GetCoordinates();
-	COORDS newCoords = RandomCoords(currentCoords);
+	COORDS newCoords = RandomCoords(currentCoords,world);
 	int x = newCoords.first;
 	int y = newCoords.second;
 	char nextField = world->worldBoard[y][x];
