@@ -3,6 +3,7 @@
 #define FIELD '.'
 #define NAME  cout << "                                    Tomasz Krezymon, ETI, Informatyka, 189642\n"
 #define COORDS pair<int,int>
+#define CREATURES vector<Organism*>
 enum Logs {
 	KILL=1
 

@@ -4,7 +4,7 @@
 class Animal : public Organism
 {
 public:
-	Animal(World* world, char sign, int strength, int initative, int lifeTime, COORDS coordinates,bool doneTurn);
+	Animal(World* world, char sign, int strength, int initative, int lifeTime, COORDS coordinates);
 	virtual void action(World* world) override;
 	bool collision(char movingAnimal, char waitingAnimal,World* world, COORDS a,COORDS b) override;
 	~Animal() override;

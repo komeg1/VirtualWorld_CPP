@@ -1,11 +1,12 @@
 ﻿#include "World.h"
 #include <conio.h>
 #include <Windows.h>
+#include "GameFunctions.h"
 World::World(int x, int y) : world_x(x), world_y(y), turn(1)
 {
-	worldBoard = new char* [world_x];
+	worldBoard = new char* [world_y];
 	for (int i = 0; i < world_y; i++)
-		worldBoard[i] = new char[world_y];
+		worldBoard[i] = new char[world_x];
 	updateBoard();
 
 }
@@ -13,9 +14,9 @@ World::World(int x, int y) : world_x(x), world_y(y), turn(1)
 World::World(): world_x(20), world_y(20), turn(1)
 {
 
-	worldBoard = new char* [world_x];
+	worldBoard = new char* [world_y];
 	for (int i = 0; i < world_y; i++)
-		worldBoard[i] = new char[world_y];
+		worldBoard[i] = new char[world_x];
 	updateBoard();
 }
 
@@ -58,23 +59,26 @@ void World::SortCreaturesArray() {
 	sort(creaturesArray.begin(), creaturesArray.end(), &comparator);
 }
 
+
+
 void World::nextTurn() {
 	SortCreaturesArray();
 	
-	string turnLog = "Tura " + STR(turn);
+	string turnLog = "Tura " + STR(turn) + ":";
 	logs.push_back(turnLog);
 	for (int i = 0; i < creaturesArray.size(); i++)
 	{
 			creaturesArray[i]->action(this);
-			creaturesArray[i]->SetIterator(this);
 			updateBoard();
 			system("CLS");
-			draw();
-			for (int i = 0; i < logs.size(); i++)
+			for (int i = 0; i < creaturesArray.size(); i++)
 			{
-				cout << i + 1 << ". " << logs[i] << "\n";
+				cout << creaturesArray[i]->GetSign() << " X: " << creaturesArray[i]->GetCoordinates().first << " Y: " << creaturesArray[i]->GetCoordinates().second << endl;
 			}
-			Sleep(200);
+			draw();
+			
+			PrintLogs(this);
+			Sleep(1500);
 
 	}
 	turn++;
@@ -91,10 +95,10 @@ void World::nextTurn() {
 void World::draw()
 {
 	//cout << "              Wirtualny Swiat\n              Tomasz Krezymon\n               Informatyka gr.2 189642";
-	for (int i = 0; i <GetWorldX(); i++)
+	for (int i = 0; i <GetWorldY(); i++)
 	{
 		cout <<"            ";
-		for (int j = 0; j < GetWorldY(); j++)
+		for (int j = 0; j < GetWorldX(); j++)
 			cout<< worldBoard[i][j]<<" ";
 		cout << endl;
 	}
@@ -102,8 +106,8 @@ void World::draw()
 
 void World::updateBoard()
 {
-	for (int i = 0; i < GetWorldX(); i++)
-		for (int j = 0; j < GetWorldY(); j++)
+	for (int i = 0; i < GetWorldY(); i++)
+		for (int j = 0; j < GetWorldX(); j++)
 			worldBoard[i][j] = FIELD;
 
 	for (Organism* a : creaturesArray)

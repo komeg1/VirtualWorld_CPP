@@ -1,9 +1,8 @@
 #include "Animal.h"
-#include "GameFunctions.h"
 #include "World.h"
 #include "Wolf.h"
-Animal::Animal(World* world, char sign, int strength, int initiative, int lifeTime, COORDS coordinates,bool doneTurn): 
-	Organism(world,sign,strength,initiative,lifeTime,coordinates,doneTurn)
+Animal::Animal(World* world, char sign, int strength, int initiative, int lifeTime, COORDS coordinates): 
+	Organism(world,sign,strength,initiative,lifeTime,coordinates)
 {
 }
 void Animal::action(World* world)
@@ -14,6 +13,8 @@ void Animal::action(World* world)
 		int y = newCoords.second;
 		char nextField = world->worldBoard[y][x];
 		char currentAnimal = GetSign();
+
+
 		vector<Organism*> creaturesVec = world->GetCreaturesArray();
 		//cout << "NOWE KOORDYNATY "<<currentAnimal<<" x: " << x << " y: " << y<< " ZNAK: " << nextField << endl;
 		if (currentAnimal != nextField)
@@ -28,33 +29,31 @@ void Animal::action(World* world)
 						{
 							CreateLog(this, creaturesVec[i], KILL, world);
 							creaturesVec[i]->~Organism();
+							creaturesVec.erase(creaturesVec.begin() + i);
 							SetCoordinates(newCoords);
 							UpdateLifeTime();
+							world->SetCreaturesArray(creaturesVec);
 							return;
 						}
 					}
 				}
 				else
 				{
-					for (int i = 0; i < creaturesVec.size(); i++)
-					{
-						if (creaturesVec[i]->GetCoordinates() == this->coordinates)
-						{
-							creaturesVec[i]->~Organism();
-							for (int j = 0; j < creaturesVec.size(); j++)
+							for (int i = 0; i < creaturesVec.size(); i++)
 							{
 								if (creaturesVec[i]->GetCoordinates() == newCoords)
 								{
 									CreateLog(creaturesVec[i], this, KILL, world);
-									return;
+									world->worldBoard[currentCoords.first][currentCoords.second] = FIELD;
+									creaturesVec.erase(creaturesVec.begin() + this->GetIndex());
+									this->~Animal();
+									world->SetCreaturesArray(creaturesVec);
 								}
 							}
 							
 							
-						}
-					}
 				}
-			}
+				}
 			else
 			{
 				SetCoordinates(newCoords);
@@ -73,24 +72,20 @@ void Animal::action(World* world)
 
 bool Animal::collision(char movingAnimal, char waitingAnimal,World* world,COORDS currentCoords, COORDS newCoords)
 {
-	if (movingAnimal != waitingAnimal)
-	{
 		vector<Organism*> temp = world->GetCreaturesArray();
-		int initiativeA = 0;
-		int initiativeB = 0;
+		int strengthB = 0;
+		int lifeTimeB = 0;
 		for (int i = 0; i < temp.size(); i++)
 		{
-			if (temp[i]->GetCoordinates() == currentCoords)
-			{
-				initiativeA = temp[i]->GetInitiative();
-			}
 			if (temp[i]->GetCoordinates() == newCoords)
 			{
-				initiativeB = temp[i]->GetInitiative();
+				strengthB = temp[i]->GetStrength();
+				lifeTimeB = temp[i]->GetlifeTime();
 			}
 		}
-		return initiativeA > initiativeB;
-	}
+		if (this->strength == strengthB)
+			return this->lifeTime > lifeTimeB;
+		return this->strength > strengthB;
 	return 0;
 		
 
