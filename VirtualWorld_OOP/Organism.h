@@ -34,10 +34,12 @@ public:
 	void SetCoordinates(pair<int, int> coordinates);
 	void UpdateLifeTime();
 
+	virtual void Kill(Organism* a,bool won);
 	COORDS RandomCoords(vector<COORDS> coords, World* world);
-	virtual vector<COORDS> CheckSurrounding(World* world, COORDS coords, char thisAnimal,int action);
+	virtual bool Block(Organism* other);
+	virtual vector<COORDS> CheckSurrounding(World* world, COORDS coords,int action)=0;
 	virtual void action(World *world) = 0;
-	virtual bool collision(char moving, char waiting,World* world,COORDS a,COORDS b);
+	virtual void collision(Organism* other)=0;
 	virtual ~Organism();
 
 };

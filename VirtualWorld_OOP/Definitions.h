@@ -11,7 +11,10 @@
 #define KEY_RIGHT 77
 enum Logs {
 	KILL=1,
-    BREED
+    BREED,
+    BREEDTIME,
+    BLOCK,
+    RUN
 
 };
 

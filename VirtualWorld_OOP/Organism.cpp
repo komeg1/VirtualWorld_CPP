@@ -35,10 +35,11 @@ COORDS Organism::RandomCoords(vector<COORDS> area, World* world)
 	
 }
 
-vector<COORDS> Organism::CheckSurrounding(World* world, COORDS coords, char thisAnimal, int action)
+bool Organism::Block(Organism* other)
 {
-	return vector<COORDS>();
+	return false;
 }
+
 
 char Organism::GetSign()const
 {
@@ -79,18 +80,32 @@ COORDS Organism::GetCoordinates()const
 }
 
 
-
-
-
-
-
-bool Organism::collision(char moving, char waiting, World* world, COORDS a, COORDS b)
+void Organism::Kill(Organism* a, bool won)
 {
-	return false;
+	CREATURES temp;
+	if (won)
+	{
+		this->world->CreateLog(this, a, KILL, world);
+		temp = world->GetCreaturesArray();
+		temp.erase(temp.begin() + a->GetIndex());
+		world->SetCreaturesArray(temp);
+		return;
+	}
+	else
+	{
+		this->world->CreateLog(a, this, KILL, world);
+		temp = world->GetCreaturesArray();
+		temp.erase(temp.begin() + this->GetIndex());
+		world->SetCreaturesArray(temp);
+		return;
+	}
+
 }
+
 
 Organism::~Organism()
 {
+	
 }
 
 

@@ -76,8 +76,10 @@ void World::NextTurn() {
 	{
 			creaturesArray[i]->action(this);
 			UpdateBoard();
+			
 	}
 	PrintConsole();
+
 	
 	turn++;
 }
@@ -137,7 +139,19 @@ void World::CreateLog(Organism* a, Organism* b, int log_type, World* world)
 		break;
 	case BREED:
 		tmpmsg << "-ROZMNOZENIE: '" << ac <<
-			"' na polu x: " << STR(b->GetCoordinates().first+1) << " y: " + STR(b->GetCoordinates().second+1);
+			"' na polu x: " << STR(b->GetCoordinates().first+1) << " y: " << STR(b->GetCoordinates().second+1);
+		finalmsg = tmpmsg.str();
+		break;
+	case BREEDTIME:
+		tmpmsg << "-NIEUDANA PROBA ROZMNOZENIA: " << ac << " na polu x: " << STR(b->GetCoordinates().first + 1) << " y: " << STR(b->GetCoordinates().second + 1);
+		finalmsg = tmpmsg.str();
+		break;
+	case BLOCK:
+		tmpmsg<<"-BLOK: "<<ac<< " zablokowal atak "<<bc<< " na polu x: " << STR(b->GetCoordinates().first + 1) << " y: " << STR(b->GetCoordinates().second + 1);
+		finalmsg = tmpmsg.str();
+		break;
+	case RUN:
+		tmpmsg << "-UCIECZKA: " << ac << " ucieka przed atakiem" << bc << " na polu x: " << STR(b->GetCoordinates().first + 1) << " y: " << STR(b->GetCoordinates().second + 1);
 		finalmsg = tmpmsg.str();
 		break;
 	}

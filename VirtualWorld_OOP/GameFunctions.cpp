@@ -8,6 +8,8 @@
 #include "Human.h"
 #include <sstream>
 #include "Grass.h"
+#include "Turtle.h"
+#include "Antelope.h"
 using namespace std;
 
 
@@ -33,13 +35,15 @@ void GameFunctions::CreateGame() {
     int wolfAmount = 0;
     int sheepAmount = 0;
     int foxAmount = 0;
+    int turtleAmount = 0;
+    int antelopeAmount = 0;
     int worldSizeX=0;
     int worldSizeY=0;
     cout << "Podaj X i Y swiata";
     cin >> worldSizeX>>worldSizeY;
     system("CLS");
     NAME;
-    cout << "Podaj liczbê wilków: ";
+    cout << "Podaj liczbê wilkow: ";
     cin >> wolfAmount;
     system("CLS");
     NAME;
@@ -47,12 +51,20 @@ void GameFunctions::CreateGame() {
     cin >> sheepAmount;
     system("CLS");
     NAME;
-    cout << "Podaj liczbê lisów: ";
+    cout << "Podaj liczbê lisow: ";
     cin >> foxAmount;
-    StartSimulation(PrepareWorld(wolfAmount,sheepAmount,foxAmount,worldSizeX,worldSizeY));
+    system("CLS");
+    NAME;
+    cout << "Podaj liczbê zolwi: ";
+    cin >> turtleAmount;
+    system("CLS");
+    NAME;
+    cout << "Podaj liczbê antylop: ";
+    cin >> antelopeAmount;
+    StartSimulation(PrepareWorld(wolfAmount,sheepAmount,foxAmount,turtleAmount,antelopeAmount,worldSizeX,worldSizeY));
 }
 
-World* GameFunctions::PrepareWorld(int wolfAmount, int sheepAmount, int foxAmount,int worldSizeX, int worldSizeY) {
+World* GameFunctions::PrepareWorld(int wolfAmount, int sheepAmount, int foxAmount,int turtleAmount,int antelopeAmount,int worldSizeX, int worldSizeY) {
     World* world = new World(worldSizeX,worldSizeY);
     int x=-1, y=-1;
     for (int i = 0; i < wolfAmount; i++)
@@ -84,7 +96,7 @@ World* GameFunctions::PrepareWorld(int wolfAmount, int sheepAmount, int foxAmoun
         
         Fox* fox = new Fox(x , y , world);
     }
-    for (int i = 0; i < 5; i++)
+    for (int i = 0; i < turtleAmount; i++)
     {
         do {
             x = rand() % worldSizeX;
@@ -92,8 +104,19 @@ World* GameFunctions::PrepareWorld(int wolfAmount, int sheepAmount, int foxAmoun
 
         } while (world->worldBoard[y][x] != FIELD);
 
-        Grass* fox = new Grass(x, y, world);
+        Turtle* fox = new Turtle(x, y, world);
     }
+    for (int i = 0; i < antelopeAmount; i++)
+    {
+        do {
+            x = rand() % worldSizeX;
+            y = rand() % worldSizeY;
+
+        } while (world->worldBoard[y][x] != FIELD);
+
+        Antelope* fox = new Antelope(x, y, world);
+    }
+  
     do {
         x = rand() % worldSizeX;
         y = rand() % worldSizeY;
@@ -107,8 +130,9 @@ void GameFunctions::StartSimulation(World* world)
 {
     int c = 0;
     system("CLS");
-    NAME;
-    world->UpdateBoard();
+    world->PrintConsole();
+    Sleep(1500);
+    system("CLS");
     while (1)
     {
         world->NextTurn();

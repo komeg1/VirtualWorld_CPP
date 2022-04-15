@@ -6,86 +6,104 @@ Animal::Animal(World* world, char sign, int strength, int initiative, int lifeTi
 	Organism(world,sign,strength,initiative,lifeTime,coordinates,breedingTimeout)
 {
 }
+bool Animal::CheckIfOrganism(COORDS newCoords, World* world) {
+	if (world->worldBoard[newCoords.second][newCoords.first] == FIELD)
+		return 0;
+	return 1;
+}
+
+vector<COORDS> Animal::PrepareArea(Organism* other) {
+	vector<COORDS> thisArea = CheckSurrounding(world, coordinates, 1),
+		otherArea = CheckSurrounding(world, other->GetCoordinates(), 1);
+
+	for (int i = 0; i < otherArea.size(); i++)
+		thisArea.push_back(otherArea[i]);
+	return thisArea;
+
+}
+
+Organism* Animal ::FindOrganism(COORDS newCoords, World* world) {
+	for (Organism* a : world->GetCreaturesArray())
+	{
+		if (a->GetCoordinates() == newCoords)
+			return a;
+	}
+	return nullptr;
+}
 void Animal::action(World* world)
 {
 		COORDS currentCoords = GetCoordinates();
-		vector<COORDS> temp = CheckSurrounding(world, currentCoords, this->sign,0);
-		COORDS newCoords = RandomCoords(temp,world);
-		int x = newCoords.first;
-		int y = newCoords.second;
-		char nextField = world->worldBoard[y][x];
-		char currentAnimal = GetSign();
-
-		vector<Organism*> creaturesVec = world->GetCreaturesArray();
-		//cout << "NOWE KOORDYNATY "<<currentAnimal<<" x: " << x << " y: " << y<< " ZNAK: " << nextField << endl;
-		if (currentAnimal != nextField)
+		COORDS newCoords = RandomCoords(CheckSurrounding(world, currentCoords, 0),world);
+		if (CheckIfOrganism(newCoords,world))
 		{
-			if (nextField != FIELD)
-			{
-				if (collision(currentAnimal, nextField, world, currentCoords, newCoords))
-				{
-					for (int i = 0; i < creaturesVec.size(); i++)
-					{
-						if (creaturesVec[i]->GetCoordinates() == newCoords)
-						{
-							world->CreateLog(this, creaturesVec[i], KILL, world);
-							creaturesVec[i]->~Organism();
-							creaturesVec.erase(creaturesVec.begin() + i);
-							SetCoordinates(newCoords);
-							UpdateLifeTime();
-							world->SetCreaturesArray(creaturesVec);
-							return;
-						}
-					}
-				}
-				else
-				{
-							for (int i = 0; i < creaturesVec.size(); i++)
-							{
-								if (creaturesVec[i]->GetCoordinates() == newCoords)
-								{
-									world->CreateLog(creaturesVec[i], this, KILL, world);
-									world->worldBoard[currentCoords.first][currentCoords.second] = FIELD;
-									creaturesVec.erase(creaturesVec.begin() + this->GetIndex());
-									this->~Animal();
-									world->SetCreaturesArray(creaturesVec);
-								}
-							}
-							
-							
-				}
-				}
-			else
-			{
-				SetCoordinates(newCoords);
-				UpdateLifeTime();
-			}
+			Organism* other = FindOrganism(newCoords,world);
+			other->collision(this);
+
 		}
 		else
 		{
-			Organism* temp = nullptr;
-			for (int i = 0; i < creaturesVec.size(); i++)
-				if (creaturesVec[i]->GetCoordinates() == newCoords)
-					temp = creaturesVec[i];
-			if (this->breedingTimeout == 0&& temp->GetBreedingTimeout() == 0)
-			{
-				
-				if (breeding(world))
-				{
-					world->CreateLog(this, this, BREED, world);
-					temp->SetBreedingTimeout();
-					this->SetBreedingTimeout();
-				}
-			}
-			world->SortCreaturesArray();
-			UpdateLifeTime();
+			this->SetCoordinates(newCoords);
+			this->UpdateLifeTime();
 		}
+		if (this->GetBreedingTimeout() > 0)
+			this->breedingTimeout--;
 
-		if (breedingTimeout > 0)
-			breedingTimeout--;
+
+		
 	}
 
-vector<COORDS> Animal::CheckSurrounding(World* world, COORDS coords, char thisAnimal,int action)
+
+void Animal::collision(Organism* attackingOrganism)
+{
+	if (this->GetSign() == attackingOrganism->GetSign())
+	{
+		if (breeding(world, this))
+			world->CreateLog(this, this, BREED, world);
+		else
+			world->CreateLog(this, this, BREEDTIME, world);
+		return;
+	}
+
+	if (this->GetStrength() == attackingOrganism->GetStrength())
+	{
+		if (this->GetlifeTime() > attackingOrganism->GetlifeTime())
+		{
+			Kill(attackingOrganism, 1);
+			attackingOrganism->~Organism();
+			
+		}
+		else
+		{
+			COORDS newCoordinates = this->GetCoordinates();
+			Kill(attackingOrganism, 0);
+			this->~Animal();
+			attackingOrganism->SetCoordinates(newCoordinates);
+		}
+		return;
+
+	}
+	else if (this->GetStrength() > attackingOrganism->GetStrength())
+	{
+
+		Kill(attackingOrganism, 1);
+		attackingOrganism->~Organism();
+	}
+	else if (this->GetStrength() < attackingOrganism->GetStrength())
+	{
+		COORDS newCoordinates = this->GetCoordinates();
+		Kill(attackingOrganism, 0);
+		this->~Animal();
+		attackingOrganism->SetCoordinates(newCoordinates);
+	}
+
+	return;
+
+
+
+
+}
+
+vector<COORDS> Animal::CheckSurrounding(World* world, COORDS coords,int action)
 {
 	int x1 = coords.first - 1,
 		x2 = coords.first + 1,
@@ -104,7 +122,7 @@ vector<COORDS> Animal::CheckSurrounding(World* world, COORDS coords, char thisAn
 	for (int i = y1; i <= y2; i++)
 		for (int j = x1; j <= x2; j++)
 		{
-			if (world->worldBoard[i][j] == thisAnimal && make_pair(j, i) == coords)
+			if (world->worldBoard[i][j] == this->GetSign() && make_pair(j, i) == coords)
 				continue;
 			else if (world->worldBoard[i][j] == FIELD)
 				availableSurrounding.push_back(make_pair(j, i));
@@ -122,41 +140,12 @@ vector<COORDS> Animal::CheckSurrounding(World* world, COORDS coords, char thisAn
 
 
 
-bool Animal::collision(char movingAnimal, char waitingAnimal,World* world,COORDS currentCoords, COORDS newCoords)
-{
 
-		vector<Organism*> temp = world->GetCreaturesArray();
-		if (movingAnimal != waitingAnimal)
-		{
-			int strengthB = 0;
-			int lifeTimeB = 0;
-			for (int i = 0; i < temp.size(); i++)
-			{
-				if (temp[i]->GetCoordinates() == newCoords)
-				{
-					strengthB = temp[i]->GetStrength();
-					lifeTimeB = temp[i]->GetlifeTime();
-				}
-			}
-			if (CheckIfBlocked())
-			{
-				if (this->strength == strengthB)
-					return this->lifeTime > lifeTimeB;
-				return this->strength > strengthB;
-			}
-		}
-		else
-
-
-		
-	return 0;
-		
-
-}
-bool Animal::breeding(World* world)
+bool Animal::IsBlocked(Organism* other)
 {
 	return false;
 }
+
 Animal::~Animal()
 {
 }

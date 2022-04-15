@@ -11,10 +11,6 @@ void Plant::action(World* world)
 	Spread(world);
 }
 
-bool Plant::SpreadProbability()
-{
-	return rand() & 1;
-}
 
 Plant::~Plant()
 {

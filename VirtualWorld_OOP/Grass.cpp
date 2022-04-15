@@ -13,15 +13,15 @@ Grass::~Grass() {
 
 void Grass::Spread(World* world)
 {
-	bool probability = SpreadProbability() & SpreadProbability();
-	if (probability)
+	//bool probability = SpreadProbability() & SpreadProbability();
+	if (1)
 	{
 		COORDS currentCoords = GetCoordinates();
-		vector<COORDS> temp = CheckSurrounding(world, currentCoords, this->sign, 0);
+		vector<COORDS> temp = CheckSurrounding(world, currentCoords, 0);
 		if (temp.size() > 0)
 		{
 			COORDS newCoords = RandomCoords(temp, world);
-			Grass* temp = new Grass(newCoords.first, newCoords.second, world);
+			//Grass* temp = new Grass(newCoords.first, newCoords.second, world);
 		}
 	}
 }

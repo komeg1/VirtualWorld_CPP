@@ -57,47 +57,22 @@ void Human::action(World*world) {
 
 	CREATURES creaturesVec = world->GetCreaturesArray();
 	char nextField = world->worldBoard[newCoords.second][newCoords.first];
-	if (nextField != FIELD)
+	if (CheckIfOrganism(newCoords, world))
 	{
-		if (collision(sign, nextField, world, currentCoords, newCoords))
-		{
-			for (int i = 0; i < creaturesVec.size(); i++)
-			{
-				if (creaturesVec[i]->GetCoordinates() == newCoords)
-				{
-					world->CreateLog(this, creaturesVec[i], KILL, world);
-					creaturesVec[i]->~Organism();
-					creaturesVec.erase(creaturesVec.begin() + i);
-					SetCoordinates(newCoords);
-					UpdateLifeTime();
-					world->SetCreaturesArray(creaturesVec);
-					return;
-				}
-			}
-		}
-		else
-		{
-			for (int i = 0; i < creaturesVec.size(); i++)
-			{
-				if (creaturesVec[i]->GetCoordinates() == newCoords)
-				{
-					world->CreateLog(creaturesVec[i], this, KILL, world);
-					world->worldBoard[currentCoords.first][currentCoords.second] = FIELD;
-					creaturesVec.erase(creaturesVec.begin() + this->GetIndex());
-					this->~Human();
-					world->SetCreaturesArray(creaturesVec);
-				}
-			}
+		Organism* other = FindOrganism(newCoords, world);
+		other->collision(this);
 
-
-		}
 	}
 	else
 	{
-		SetCoordinates(newCoords);
-		UpdateLifeTime();
+		this->SetCoordinates(newCoords);
+		this->UpdateLifeTime();
 	}
-
-
-
 }
+
+bool Human::breeding(World* world, Organism* other)
+{
+	return false;
+}
+
+

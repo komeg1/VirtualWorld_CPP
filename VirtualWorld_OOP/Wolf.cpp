@@ -8,14 +8,20 @@ Wolf::Wolf(int x, int y, World* world) : Animal(world, 'W', 9, 5, 0, make_pair(x
 	world->SetCreaturesArray(temp);
 }
 
-bool Wolf::breeding(World* world)
+bool Wolf::breeding(World* world,Organism* other)
 {
-	COORDS newCreatureCoords = RandomCoords(CheckSurrounding(world, coordinates, this->sign,1),world);
-	if (newCreatureCoords != make_pair(-1, -1))
+	if (this->GetBreedingTimeout() == 0 && other->GetBreedingTimeout() == 0)
 	{
-		Wolf* child = new Wolf(newCreatureCoords.first, newCreatureCoords.second, world);
-		child->breedingTimeout = BREEDING_CNTDOWN;
-		return 1;
+		vector<COORDS> area = PrepareArea(other);
+		COORDS newCreatureCoords = RandomCoords(area, world);
+		if (newCreatureCoords != make_pair(-1, -1))
+		{
+			Wolf* child = new Wolf(newCreatureCoords.first, newCreatureCoords.second, world);
+			child->SetBreedingTimeout();
+			this->SetBreedingTimeout();
+			other->SetBreedingTimeout();
+			return 1;
+		}
 	}
 	return 0;
 }
