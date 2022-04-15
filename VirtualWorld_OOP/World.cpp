@@ -1,13 +1,13 @@
 ﻿#include "World.h"
 #include <conio.h>
 #include <Windows.h>
-#include "GameFunctions.h"
+#include <sstream>
 World::World(int x, int y) : world_x(x), world_y(y), turn(1)
 {
 	worldBoard = new char* [world_y];
 	for (int i = 0; i < world_y; i++)
 		worldBoard[i] = new char[world_x];
-	updateBoard();
+	UpdateBoard();
 
 }
 
@@ -17,7 +17,7 @@ World::World(): world_x(20), world_y(20), turn(1)
 	worldBoard = new char* [world_y];
 	for (int i = 0; i < world_y; i++)
 		worldBoard[i] = new char[world_x];
-	updateBoard();
+	UpdateBoard();
 }
 
 int World::GetWorldX() const
@@ -54,45 +54,42 @@ void World::SetLogs(vector<string> logs)
 	this->logs = logs;
 }
 
+
+
 //Sortowanie organizmów po inicjatywie/długosci życia
 void World::SortCreaturesArray() {
-	sort(creaturesArray.begin(), creaturesArray.end(), &comparator);
+	sort(creaturesArray.begin(), creaturesArray.end(), &World::comparator);
 }
 
+bool World::comparator(const Organism* a, const Organism* b)
+{
+	if (a->GetInitiative() == b->GetInitiative())
+		return a->GetlifeTime() > b->GetlifeTime();
+	return a->GetInitiative() > b->GetInitiative();
+}
 
-
-void World::nextTurn() {
-	SortCreaturesArray();
-	
+void World::NextTurn() {
+	SortCreaturesArray();	
 	string turnLog = "Tura " + STR(turn) + ":";
 	logs.push_back(turnLog);
 	for (int i = 0; i < creaturesArray.size(); i++)
 	{
 			creaturesArray[i]->action(this);
-			updateBoard();
-			system("CLS");
-			for (int i = 0; i < creaturesArray.size(); i++)
-			{
-				cout << creaturesArray[i]->GetSign() << " X: " << creaturesArray[i]->GetCoordinates().first << " Y: " << creaturesArray[i]->GetCoordinates().second << endl;
-			}
-			draw();
-			
-			PrintLogs(this);
-			Sleep(1500);
-
+			UpdateBoard();
 	}
+	PrintConsole();
+	
 	turn++;
-
-	
-	
-	
-	
-
-
 }
 
-
-void World::draw()
+void World::PrintConsole() {
+	system("CLS");
+	NAME;
+	Draw();
+	PrintLogs(this);
+	
+}
+void World::Draw()
 {
 	//cout << "              Wirtualny Swiat\n              Tomasz Krezymon\n               Informatyka gr.2 189642";
 	for (int i = 0; i <GetWorldY(); i++)
@@ -104,7 +101,7 @@ void World::draw()
 	}
 }
 
-void World::updateBoard()
+void World::UpdateBoard()
 {
 	for (int i = 0; i < GetWorldY(); i++)
 		for (int j = 0; j < GetWorldX(); j++)
@@ -117,6 +114,52 @@ void World::updateBoard()
 	}
 }
 
+
+
+
+
 World::~World()
 {
+}
+
+void World::CreateLog(Organism* a, Organism* b, int log_type, World* world)
+{
+	ostringstream tmpmsg;
+	string finalmsg;
+	char ac = a->GetSign();
+	char bc = b->GetSign();
+	switch (log_type)
+	{
+	case KILL:
+		tmpmsg << "-ZABOJSTWO: '" << ac << "' zabil '" << bc <<
+			"' na polu x: " << STR(b->GetCoordinates().first+1) << " y: " + STR(b->GetCoordinates().second+1);
+		finalmsg = tmpmsg.str();
+		break;
+	case BREED:
+		tmpmsg << "-ROZMNOZENIE: '" << ac <<
+			"' na polu x: " << STR(b->GetCoordinates().first+1) << " y: " + STR(b->GetCoordinates().second+1);
+		finalmsg = tmpmsg.str();
+		break;
+	}
+
+	vector<string> tempLog = world->GetLogs();
+	tempLog.push_back(finalmsg);
+	world->SetLogs(tempLog);
+}
+
+void World::PrintLogs(World* world)
+{
+	vector<string> logs = world->GetLogs();
+	cout << "========================ZDARZENIA================================\n";
+	if (logs.size() < 6) {
+		for (string log : logs)
+			cout << log << "\n";
+	}
+	else
+		for (int i = logs.size() - 6; i < logs.size(); i++)
+			cout << logs[i] << "\n";
+	cout << "=================================================================";
+	cout << "\nILOSC ZWIERZAT:" << world->GetCreaturesArray().size();
+
+
 }

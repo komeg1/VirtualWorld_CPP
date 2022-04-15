@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Organism.h"
+#include <map>
 using namespace std;
 class World
 {
@@ -10,6 +11,7 @@ private:
 	vector <Organism*> creaturesArray;
 	vector <string> logs;
 	int turn;
+	
 	
 public:
 	char** worldBoard;
@@ -23,10 +25,14 @@ public:
 	vector<string> GetLogs()const;
 	void SetCreaturesArray(vector<Organism*> creatures);
 	void SortCreaturesArray();
+	static bool comparator(const Organism* a, const Organism* b);
+	void CreateLog(Organism* a, Organism* b, int log_type, World* world);
+	void PrintLogs(World* world);
 	void SetLogs(vector<string> logs);
-	void nextTurn();
-	void draw();
-	void updateBoard();
+	void NextTurn();
+	void PrintConsole();
+	void Draw();
+	void UpdateBoard();
 
 
 	~World();

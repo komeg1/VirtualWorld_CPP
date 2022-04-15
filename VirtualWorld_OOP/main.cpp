@@ -8,6 +8,7 @@
 #include <conio.h>
 int main() {
 	srand(time(NULL));
-	StartGame();
+	GameFunctions game;
+	game.StartGame();
 	
 	}
