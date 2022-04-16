@@ -14,7 +14,8 @@ enum Logs {
     BREED,
     BREEDTIME,
     BLOCK,
-    RUN
+    RUN,
+    EAT
 
 };
 

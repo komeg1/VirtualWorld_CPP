@@ -33,11 +33,10 @@ public:
 	void SetBreedingTimeout();
 	void SetCoordinates(pair<int, int> coordinates);
 	void UpdateLifeTime();
-
-	virtual void Kill(Organism* a,bool won);
+	virtual void Kill(Organism* a,bool won)=0;
 	COORDS RandomCoords(vector<COORDS> coords, World* world);
 	virtual bool Block(Organism* other);
-	virtual vector<COORDS> CheckSurrounding(World* world, COORDS coords,int action)=0;
+	virtual vector<COORDS> CheckSurrounding(World* world, COORDS coords,int action);
 	virtual void action(World *world) = 0;
 	virtual void collision(Organism* other)=0;
 	virtual ~Organism();

@@ -154,6 +154,10 @@ void World::CreateLog(Organism* a, Organism* b, int log_type, World* world)
 		tmpmsg << "-UCIECZKA: " << ac << " ucieka przed atakiem" << bc << " na polu x: " << STR(b->GetCoordinates().first + 1) << " y: " << STR(b->GetCoordinates().second + 1);
 		finalmsg = tmpmsg.str();
 		break;
+	case EAT:
+		tmpmsg << "-JEDZENIE: " << ac << " zjadl " << bc << " na polu x: " << STR(b->GetCoordinates().first + 1) << " y: " << STR(b->GetCoordinates().second + 1);
+		finalmsg = tmpmsg.str();
+		break;
 	}
 
 	vector<string> tempLog = world->GetLogs();

@@ -10,6 +10,7 @@
 #include "Grass.h"
 #include "Turtle.h"
 #include "Antelope.h"
+#include "Dandelion.h"
 using namespace std;
 
 
@@ -117,6 +118,27 @@ World* GameFunctions::PrepareWorld(int wolfAmount, int sheepAmount, int foxAmoun
         Antelope* fox = new Antelope(x, y, world);
     }
   
+    for (int i = 0; i < 5; i++)
+    {
+        do {
+            x = rand() % worldSizeX;
+            y = rand() % worldSizeY;
+
+        } while (world->worldBoard[y][x] != FIELD);
+
+        Grass* fox = new Grass(x, y, world);
+    }
+    for (int i = 0; i < 5; i++)
+    {
+        do {
+            x = rand() % worldSizeX;
+            y = rand() % worldSizeY;
+
+        } while (world->worldBoard[y][x] != FIELD);
+
+        Dandelion* fox = new Dandelion(x, y, world);
+    }
+
     do {
         x = rand() % worldSizeX;
         y = rand() % worldSizeY;

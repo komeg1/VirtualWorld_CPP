@@ -22,6 +22,29 @@ vector<COORDS> Animal::PrepareArea(Organism* other) {
 
 }
 
+
+void Animal::Kill(Organism* a, bool won)
+{
+	CREATURES temp;
+	if (won)
+	{
+		this->world->CreateLog(this, a, KILL, world);
+		temp = world->GetCreaturesArray();
+		temp.erase(temp.begin() + a->GetIndex());
+		world->SetCreaturesArray(temp);
+		return;
+	}
+	else
+	{
+		this->world->CreateLog(a, this, KILL, world);
+		temp = world->GetCreaturesArray();
+		temp.erase(temp.begin() + this->GetIndex());
+		world->SetCreaturesArray(temp);
+		return;
+	}
+
+}
+
 Organism* Animal ::FindOrganism(COORDS newCoords, World* world) {
 	for (Organism* a : world->GetCreaturesArray())
 	{
@@ -103,38 +126,7 @@ void Animal::collision(Organism* attackingOrganism)
 
 }
 
-vector<COORDS> Animal::CheckSurrounding(World* world, COORDS coords,int action)
-{
-	int x1 = coords.first - 1,
-		x2 = coords.first + 1,
-		y1 = coords.second - 1,
-		y2 = coords.second + 1;
-	vector<COORDS> availableSurrounding;
-	if (x1 < 0)
-		x1 = 0;
-	if (y1 < 0)
-		y1 = 0;
-	if (x2 == world->GetWorldX())
-		x2--;
-	if (y2 == world->GetWorldY())
-		y2--;
 
-	for (int i = y1; i <= y2; i++)
-		for (int j = x1; j <= x2; j++)
-		{
-			if (world->worldBoard[i][j] == this->GetSign() && make_pair(j, i) == coords)
-				continue;
-			else if (world->worldBoard[i][j] == FIELD)
-				availableSurrounding.push_back(make_pair(j, i));
-			else {
-				if (action != 1)
-					availableSurrounding.push_back(make_pair(j, i));
-			}
-		}
-
-
-	return availableSurrounding;
-}
 
 
 

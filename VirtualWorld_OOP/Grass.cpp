@@ -1,5 +1,7 @@
 #include "Grass.h"
 #include "World.h"
+
+
 Grass::Grass(int x, int y, World* world) : Plant(world, '~', 0, 0, 0, make_pair(x, y), 0) {
 	world->worldBoard[y][x] = sign;
 	CREATURES temp = world->GetCreaturesArray();
@@ -7,21 +9,23 @@ Grass::Grass(int x, int y, World* world) : Plant(world, '~', 0, 0, 0, make_pair(
 	world->SetCreaturesArray(temp);
 }
 
+
 Grass::~Grass() {
 
 }
 
-void Grass::Spread(World* world)
+void Grass::Spread()
 {
-	//bool probability = SpreadProbability() & SpreadProbability();
-	if (1)
-	{
+
 		COORDS currentCoords = GetCoordinates();
-		vector<COORDS> temp = CheckSurrounding(world, currentCoords, 0);
+		vector<COORDS> temp = CheckSurrounding(world, currentCoords, 1);
 		if (temp.size() > 0)
 		{
+			world->CreateLog(this, this, BREED, world);
 			COORDS newCoords = RandomCoords(temp, world);
-			//Grass* temp = new Grass(newCoords.first, newCoords.second, world);
+			Grass* temp = new Grass(newCoords.first, newCoords.second, this->world);
+			temp->SetBreedingTimeout();
+			this->SetBreedingTimeout();
 		}
-	}
+
 }

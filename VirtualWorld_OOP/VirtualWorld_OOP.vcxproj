@@ -141,11 +141,15 @@
   <ItemGroup>
     <ClCompile Include="Animal.cpp" />
     <ClCompile Include="Antelope.cpp" />
+    <ClCompile Include="Dandelion.cpp" />
     <ClCompile Include="Fox.cpp" />
     <ClCompile Include="GameFunctions.cpp" />
+    <ClCompile Include="Grass.cpp" />
+    <ClCompile Include="Guarana.cpp" />
     <ClCompile Include="Human.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Organism.cpp" />
+    <ClCompile Include="Plant.cpp" />
     <ClCompile Include="Sheep.cpp" />
     <ClCompile Include="Turtle.cpp" />
     <ClCompile Include="Wolf.cpp" />
@@ -154,11 +158,15 @@
   <ItemGroup>
     <ClInclude Include="Animal.h" />
     <ClInclude Include="Antelope.h" />
+    <ClInclude Include="Dandelion.h" />
     <ClInclude Include="Fox.h" />
     <ClInclude Include="GameFunctions.h" />
     <ClInclude Include="Definitions.h" />
+    <ClInclude Include="Grass.h" />
+    <ClInclude Include="Guarana.h" />
     <ClInclude Include="Human.h" />
     <ClInclude Include="Organism.h" />
+    <ClInclude Include="Plant.h" />
     <ClInclude Include="Sheep.h" />
     <ClInclude Include="Turtle.h" />
     <ClInclude Include="Wolf.h" />

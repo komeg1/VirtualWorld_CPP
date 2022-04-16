@@ -5,6 +5,10 @@ class Plant : public Organism {
 public:
 	Plant(World* world, char sign, int strength, int initative, int lifeTime, COORDS coordinates, int breedingTimeout);
 	void action(World* world) override;
-	virtual void Spread(World* world) = 0;
+	void Kill(Organism* a, bool won)override;
+	void collision(Organism* other) override;
+	virtual void Spread() = 0;
+	bool SpreadProbability();
 	~Plant()override;
+
 };

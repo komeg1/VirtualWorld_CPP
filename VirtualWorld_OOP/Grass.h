@@ -5,6 +5,8 @@ class Grass : public Plant
 public:
 	Grass(int x, int y, World* world);
 	~Grass()override;
-	void Spread(World* world);
+	void Spread()override;
 };
+
+
 

@@ -13,6 +13,21 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Pliki nagłówkowe\Game">
+      <UniqueIdentifier>{2606f04e-b366-42ca-b9e5-34b849977c40}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pliki nagłówkowe\Game\World">
+      <UniqueIdentifier>{d606d850-b19b-4f02-9199-955a626dce9f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pliki nagłówkowe\Game\World\Organisms">
+      <UniqueIdentifier>{c4544a4f-3bf4-4ccf-9bea-6be8510d7ee7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pliki nagłówkowe\Game\World\Organisms\Animals">
+      <UniqueIdentifier>{e9702d3f-9a61-4e1b-abab-27928ff8d51f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pliki nagłówkowe\Game\World\Organisms\Plants">
+      <UniqueIdentifier>{a7aa70fa-39c4-4043-8c09-c8c8f65a21c7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -48,40 +63,64 @@
     <ClCompile Include="Antelope.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
+    <ClCompile Include="Plant.cpp">
+      <Filter>Pliki źródłowe</Filter>
+    </ClCompile>
+    <ClCompile Include="Grass.cpp">
+      <Filter>Pliki źródłowe</Filter>
+    </ClCompile>
+    <ClCompile Include="Dandelion.cpp">
+      <Filter>Pliki źródłowe</Filter>
+    </ClCompile>
+    <ClCompile Include="Guarana.cpp">
+      <Filter>Pliki źródłowe</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="World.h">
-      <Filter>Pliki nagłówkowe</Filter>
-    </ClInclude>
-    <ClInclude Include="Organism.h">
-      <Filter>Pliki nagłówkowe</Filter>
-    </ClInclude>
     <ClInclude Include="Animal.h">
-      <Filter>Pliki nagłówkowe</Filter>
-    </ClInclude>
-    <ClInclude Include="Wolf.h">
-      <Filter>Pliki nagłówkowe</Filter>
-    </ClInclude>
-    <ClInclude Include="GameFunctions.h">
-      <Filter>Pliki nagłówkowe</Filter>
-    </ClInclude>
-    <ClInclude Include="Sheep.h">
-      <Filter>Pliki nagłówkowe</Filter>
-    </ClInclude>
-    <ClInclude Include="Definitions.h">
-      <Filter>Pliki nagłówkowe</Filter>
-    </ClInclude>
-    <ClInclude Include="Fox.h">
-      <Filter>Pliki nagłówkowe</Filter>
-    </ClInclude>
-    <ClInclude Include="Human.h">
-      <Filter>Pliki nagłówkowe</Filter>
-    </ClInclude>
-    <ClInclude Include="Turtle.h">
-      <Filter>Pliki nagłówkowe</Filter>
+      <Filter>Pliki nagłówkowe\Game\World\Organisms\Animals</Filter>
     </ClInclude>
     <ClInclude Include="Antelope.h">
-      <Filter>Pliki nagłówkowe</Filter>
+      <Filter>Pliki nagłówkowe\Game\World\Organisms\Animals</Filter>
+    </ClInclude>
+    <ClInclude Include="Fox.h">
+      <Filter>Pliki nagłówkowe\Game\World\Organisms\Animals</Filter>
+    </ClInclude>
+    <ClInclude Include="Sheep.h">
+      <Filter>Pliki nagłówkowe\Game\World\Organisms\Animals</Filter>
+    </ClInclude>
+    <ClInclude Include="Turtle.h">
+      <Filter>Pliki nagłówkowe\Game\World\Organisms\Animals</Filter>
+    </ClInclude>
+    <ClInclude Include="Wolf.h">
+      <Filter>Pliki nagłówkowe\Game\World\Organisms\Animals</Filter>
+    </ClInclude>
+    <ClInclude Include="Organism.h">
+      <Filter>Pliki nagłówkowe\Game\World\Organisms</Filter>
+    </ClInclude>
+    <ClInclude Include="Plant.h">
+      <Filter>Pliki nagłówkowe\Game\World\Organisms\Plants</Filter>
+    </ClInclude>
+    <ClInclude Include="Grass.h">
+      <Filter>Pliki nagłówkowe\Game\World\Organisms\Plants</Filter>
+    </ClInclude>
+    <ClInclude Include="Definitions.h">
+      <Filter>Pliki nagłówkowe\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="GameFunctions.h">
+      <Filter>Pliki nagłówkowe\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="World.h">
+      <Filter>Pliki nagłówkowe\Game\World</Filter>
+    </ClInclude>
+    <ClInclude Include="Human.h">
+      <Filter>Pliki nagłówkowe\Game\World\Organisms\Animals</Filter>
+    </ClInclude>
+    <ClInclude Include="Dandelion.h">
+      <Filter>Pliki nagłówkowe\Game\World\Organisms\Plants</Filter>
+    </ClInclude>
+    <ClInclude Include="Guarana.h">
+      <Filter>Pliki nagłówkowe\Game\World\Organisms\Plants</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
