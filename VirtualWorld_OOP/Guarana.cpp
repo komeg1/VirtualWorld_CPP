@@ -8,7 +8,6 @@ Guarana::Guarana(int x, int y, World* world) : Plant(world, '$', 0, 0, 0, make_p
 	world->SetCreaturesArray(temp);
 }
 
-Guarana::~Guarana();
 
 void Guarana::Spread() {
 	COORDS currentCoords = GetCoordinates();
@@ -21,6 +20,10 @@ void Guarana::Spread() {
 		temp->SetBreedingTimeout();
 		this->SetBreedingTimeout();
 	}
+}
+
+Guarana::~Guarana()
+{
 }
 
 void Guarana::collision(Organism* other)
