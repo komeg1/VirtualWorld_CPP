@@ -1,10 +1,15 @@
 #include "Organism.h"
 #include "World.h"
 
-Organism::Organism(World* world, char sign, int strength, int initiative, int lifeTime, COORDS coordinates,int breedingTimeout) : 
-	world(world), sign(sign), strength(strength), initiative(initiative), lifeTime(lifeTime), coordinates(coordinates), breedingTimeout(breedingTimeout)
+Organism::Organism(World* world, char sign, int strength, int initiative, COORDS coordinates) : 
+	world(world), sign(sign), strength(strength), initiative(initiative), coordinates(coordinates)
 {
 
+}
+
+void Organism::GuaranaBoost()
+{
+		this->strength += 3;
 }
 
 
@@ -24,7 +29,7 @@ void Organism::UpdateLifeTime()
 	this->lifeTime++;
 }
 
-COORDS Organism::RandomCoords(vector<COORDS> area, World* world)
+COORDS Organism::RandomCoords(vector<COORDS> area)
 {
 		if (area.size() > 0)
 		{
@@ -84,7 +89,7 @@ COORDS Organism::GetCoordinates()const
 
 
 
-vector<COORDS> Organism::CheckSurrounding(World* world, COORDS coords, int action)
+vector<COORDS> Organism::CheckSurrounding(COORDS coords, int action)
 {
 	int x1 = coords.first - 1,
 		x2 = coords.first + 1,
@@ -95,17 +100,17 @@ vector<COORDS> Organism::CheckSurrounding(World* world, COORDS coords, int actio
 		x1 = 0;
 	if (y1 < 0)
 		y1 = 0;
-	if (x2 == world->GetWorldX())
+	if (x2 == this->world->GetWorldX())
 		x2--;
-	if (y2 == world->GetWorldY())
+	if (y2 == this->world->GetWorldY())
 		y2--;
 
 	for (int i = y1; i <= y2; i++)
 		for (int j = x1; j <= x2; j++)
 		{
-			if (world->worldBoard[i][j] == this->GetSign() && make_pair(j, i) == coords)
+			if (this->world->worldBoard[i][j] == this->GetSign() && make_pair(j, i) == coords)
 				continue;
-			else if (world->worldBoard[i][j] == FIELD)
+			else if (this->world->worldBoard[i][j] == FIELD)
 				availableSurrounding.push_back(make_pair(j, i));
 			else {
 				if (action != 1)

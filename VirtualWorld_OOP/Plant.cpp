@@ -1,10 +1,10 @@
 #include "Plant.h"
 #include "World.h"
-Plant::Plant(World* world, char sign, int strength, int initiative, int lifeTime, COORDS coordinates, int breedingTimeout):
-Organism(world, sign, strength, initiative, lifeTime, coordinates, breedingTimeout) {
+Plant::Plant(World* world, char sign, int strength, int initiative, COORDS coordinates):
+Organism(world, sign, strength, initiative,coordinates) {
 }
 
-void Plant::action(World* world)
+void Plant::action()
 {
 	if (SpreadProbability() && this->GetBreedingTimeout() == 0)
 	{
@@ -81,7 +81,7 @@ void Plant::Kill(Organism * a, bool won)
 bool Plant::SpreadProbability()
 {
 	int val = rand() % 100 + 1;
-	if (val <= 10)
+	if (val <= 2)
 		return 1;
 	return 0;
 }

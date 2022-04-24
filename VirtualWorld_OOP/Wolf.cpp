@@ -1,6 +1,6 @@
 #include "Wolf.h"
 #include "World.h"
-Wolf::Wolf(int x, int y, World* world) : Animal(world, 'W', 9, 5, 0, make_pair(x, y),0)
+Wolf::Wolf(int x, int y, World* world) : Animal(world, 'W', 9, 5, make_pair(x, y))
 {
 	world->worldBoard[y][x] = sign;
 	CREATURES temp = world->GetCreaturesArray();
@@ -8,12 +8,12 @@ Wolf::Wolf(int x, int y, World* world) : Animal(world, 'W', 9, 5, 0, make_pair(x
 	world->SetCreaturesArray(temp);
 }
 
-bool Wolf::breeding(World* world,Organism* other)
+bool Wolf::breeding(Organism* other)
 {
 	if (this->GetBreedingTimeout() == 0 && other->GetBreedingTimeout() == 0)
 	{
 		vector<COORDS> area = PrepareArea(other);
-		COORDS newCreatureCoords = RandomCoords(area, world);
+		COORDS newCreatureCoords = RandomCoords(area);
 		if (newCreatureCoords != make_pair(-1, -1))
 		{
 			Wolf* child = new Wolf(newCreatureCoords.first, newCreatureCoords.second, world);

@@ -15,7 +15,8 @@ enum Logs {
     BREEDTIME,
     BLOCK,
     RUN,
-    EAT
+    EAT,
+    BOOST
 
 };
 

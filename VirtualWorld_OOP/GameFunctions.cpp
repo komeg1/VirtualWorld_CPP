@@ -11,6 +11,7 @@
 #include "Turtle.h"
 #include "Antelope.h"
 #include "Dandelion.h"
+#include "Guarana.h"
 using namespace std;
 
 
@@ -24,6 +25,9 @@ void GameFunctions::StartGame()
     switch (n) {
     case 1:
         CreateGame();
+        break;
+    case 2:
+        CreateRandomGame();
     }
                                                
 
@@ -63,6 +67,18 @@ void GameFunctions::CreateGame() {
     cout << "Podaj liczbê antylop: ";
     cin >> antelopeAmount;
     StartSimulation(PrepareWorld(wolfAmount,sheepAmount,foxAmount,turtleAmount,antelopeAmount,worldSizeX,worldSizeY));
+}
+
+void GameFunctions::CreateRandomGame()
+{
+    system("CLS");
+    NAME;
+    Organism* GetRandomOrganism();
+    int worldSizeX = 0;
+    int worldSizeY = 0;
+    cout << "Podaj X i Y swiata";
+    cin >> worldSizeX >> worldSizeY;
+
 }
 
 World* GameFunctions::PrepareWorld(int wolfAmount, int sheepAmount, int foxAmount,int turtleAmount,int antelopeAmount,int worldSizeX, int worldSizeY) {
@@ -137,6 +153,16 @@ World* GameFunctions::PrepareWorld(int wolfAmount, int sheepAmount, int foxAmoun
         } while (world->worldBoard[y][x] != FIELD);
 
         Dandelion* fox = new Dandelion(x, y, world);
+    }
+    for (int i = 0; i < 5; i++)
+    {
+        do {
+            x = rand() % worldSizeX;
+            y = rand() % worldSizeY;
+
+        } while (world->worldBoard[y][x] != FIELD);
+
+        Guarana* fox = new Guarana(x, y, world);
     }
 
     do {

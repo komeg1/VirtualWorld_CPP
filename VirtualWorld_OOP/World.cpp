@@ -74,11 +74,13 @@ void World::NextTurn() {
 	logs.push_back(turnLog);
 	for (int i = 0; i < creaturesArray.size(); i++)
 	{
-			creaturesArray[i]->action(this);
+			creaturesArray[i]->action();
 			UpdateBoard();
 			
 	}
 	PrintConsole();
+	
+	
 
 	
 	turn++;
@@ -158,6 +160,10 @@ void World::CreateLog(Organism* a, Organism* b, int log_type, World* world)
 		tmpmsg << "-JEDZENIE: " << ac << " zjadl " << bc << " na polu x: " << STR(b->GetCoordinates().first + 1) << " y: " << STR(b->GetCoordinates().second + 1);
 		finalmsg = tmpmsg.str();
 		break;
+	case BOOST:
+		tmpmsg << "-WZMOCNIENIE: " << ac << " zjadl guarane" << " na polu x: " << STR(b->GetCoordinates().first + 1) << " y: " << STR(b->GetCoordinates().second + 1)<<" SILA WYNOSI "<<a->GetStrength();
+		finalmsg = tmpmsg.str();
+		break;
 	}
 
 	vector<string> tempLog = world->GetLogs();
@@ -169,12 +175,12 @@ void World::PrintLogs(World* world)
 {
 	vector<string> logs = world->GetLogs();
 	cout << "========================ZDARZENIA================================\n";
-	if (logs.size() < 6) {
+	if (logs.size() < 10) {
 		for (string log : logs)
 			cout << log << "\n";
 	}
 	else
-		for (int i = logs.size() - 6; i < logs.size(); i++)
+		for (int i = logs.size() - 10; i < logs.size(); i++)
 			cout << logs[i] << "\n";
 	cout << "=================================================================";
 	cout << "\nILOSC ZWIERZAT:" << world->GetCreaturesArray().size();

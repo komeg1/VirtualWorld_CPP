@@ -2,21 +2,22 @@
 #include "World.h"
 #include <Windows.h>
 #include <conio.h>
-Human::Human(int x, int y, World* world) : Animal(world, 'H', 5, 4, 0, make_pair(x, y), 0) {
+Human::Human(int x, int y, World* world) : Animal(world, 'H', 5, 4, make_pair(x, y)) {
 	world->worldBoard[y][x] = sign;
 	CREATURES temp = world->GetCreaturesArray();
 	temp.push_back(this);
 	world->SetCreaturesArray(temp);
 }
 
-void Human::action(World*world) {
+void Human::action() {
 	COORDS currentCoords = GetCoordinates();
 	COORDS newCoords = currentCoords;
 	int c = 0;
 	while (c == 0)
 	{
+		
 		world->PrintConsole();
-		cout << "Podaj ruch czlowieka:";
+		cout << "\nPodaj ruch czlowieka:";
 		
 		c = _getch();
 		c = _getch();
@@ -57,9 +58,9 @@ void Human::action(World*world) {
 
 	CREATURES creaturesVec = world->GetCreaturesArray();
 	char nextField = world->worldBoard[newCoords.second][newCoords.first];
-	if (CheckIfOrganism(newCoords, world))
+	if (CheckIfOrganism(newCoords))
 	{
-		Organism* other = FindOrganism(newCoords, world);
+		Organism* other = FindOrganism(newCoords);
 		other->collision(this);
 
 	}
@@ -70,9 +71,10 @@ void Human::action(World*world) {
 	}
 }
 
-bool Human::breeding(World* world, Organism* other)
+bool Human::breeding(Organism* other)
 {
-	return false;
+	if(other->GetSign()==this->GetSign())
+	return true;
 }
 
 

@@ -2,7 +2,7 @@
 #include "World.h"
 
 
-Grass::Grass(int x, int y, World* world) : Plant(world, '~', 0, 0, 0, make_pair(x, y), 0) {
+Grass::Grass(int x, int y, World* world) : Plant(world, '~', 0, 0, make_pair(x, y)) {
 	world->worldBoard[y][x] = sign;
 	CREATURES temp = world->GetCreaturesArray();
 	temp.push_back(this);
@@ -18,11 +18,11 @@ void Grass::Spread()
 {
 
 		COORDS currentCoords = GetCoordinates();
-		vector<COORDS> temp = CheckSurrounding(world, currentCoords, 1);
+		vector<COORDS> temp = CheckSurrounding(currentCoords, 1);
 		if (temp.size() > 0)
 		{
 			world->CreateLog(this, this, BREED, world);
-			COORDS newCoords = RandomCoords(temp, world);
+			COORDS newCoords = RandomCoords(temp);
 			Grass* temp = new Grass(newCoords.first, newCoords.second, this->world);
 			temp->SetBreedingTimeout();
 			this->SetBreedingTimeout();

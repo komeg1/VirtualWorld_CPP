@@ -148,6 +148,7 @@
     <ClCompile Include="Guarana.cpp" />
     <ClCompile Include="Human.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Nightshade.cpp" />
     <ClCompile Include="Organism.cpp" />
     <ClCompile Include="Plant.cpp" />
     <ClCompile Include="Sheep.cpp" />
@@ -165,6 +166,7 @@
     <ClInclude Include="Grass.h" />
     <ClInclude Include="Guarana.h" />
     <ClInclude Include="Human.h" />
+    <ClInclude Include="Nightshade.h" />
     <ClInclude Include="Organism.h" />
     <ClInclude Include="Plant.h" />
     <ClInclude Include="Sheep.h" />

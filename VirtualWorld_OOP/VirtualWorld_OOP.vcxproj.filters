@@ -75,6 +75,9 @@
     <ClCompile Include="Guarana.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
+    <ClCompile Include="Nightshade.cpp">
+      <Filter>Pliki źródłowe</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animal.h">
@@ -120,6 +123,9 @@
       <Filter>Pliki nagłówkowe\Game\World\Organisms\Plants</Filter>
     </ClInclude>
     <ClInclude Include="Guarana.h">
+      <Filter>Pliki nagłówkowe\Game\World\Organisms\Plants</Filter>
+    </ClInclude>
+    <ClInclude Include="Nightshade.h">
       <Filter>Pliki nagłówkowe\Game\World\Organisms\Plants</Filter>
     </ClInclude>
   </ItemGroup>

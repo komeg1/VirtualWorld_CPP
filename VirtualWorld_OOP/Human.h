@@ -4,8 +4,8 @@ class Human : public Animal
 {
 public:
 	Human(int x, int y, World* world);
-	void action(World* world)override;
-	bool breeding(World* world, Organism* other)override;
+	void action()override;
+	bool breeding(Organism* other)override;
 
 };
 

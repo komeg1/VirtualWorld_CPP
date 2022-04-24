@@ -12,6 +12,7 @@ class GameFunctions {
 public:
 	void StartGame();
 	void CreateGame();
+	void CreateRandomGame();
 	World* PrepareWorld(int wolfAmount, int sheepAmount, int foxAmount, int turtleAmount,int antelopeAmount, int worldSizeX, int worldSizeY);
 	void StartSimulation(World* world);
 };

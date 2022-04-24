@@ -1,6 +1,6 @@
 #include "Fox.h"
 #include "World.h"
-Fox::Fox(int x, int y, World* world) : Animal(world, 'F', 3, 7, 0, make_pair(x, y),0)
+Fox::Fox(int x, int y, World* world) : Animal(world, 'F', 3, 7, make_pair(x, y))
 {
 	world->worldBoard[y][x] = sign;
 	CREATURES temp = world->GetCreaturesArray();
@@ -8,13 +8,13 @@ Fox::Fox(int x, int y, World* world) : Animal(world, 'F', 3, 7, 0, make_pair(x, 
 	world->SetCreaturesArray(temp);
 }
 
-void Fox::action(World* world)
+void Fox::action()
 {
 	COORDS currentCoords = GetCoordinates();
-	COORDS newCoords = RandomCoords(CheckSurrounding(world, currentCoords, 0), world);
-	if (newCoords!=make_pair(-1,-1)&&CheckIfOrganism(newCoords, world))
+	COORDS newCoords = RandomCoords(CheckSurrounding(currentCoords, 0));
+	if (newCoords!=make_pair(-1,-1)&&CheckIfOrganism(newCoords))
 	{
-		Organism* other = FindOrganism(newCoords, world);
+		Organism* other = FindOrganism(newCoords);
 		other->collision(this);
 
 	}
@@ -27,12 +27,12 @@ void Fox::action(World* world)
 	if (this->GetBreedingTimeout() > 0)
 		this->breedingTimeout--;
 }
-bool Fox::breeding(World* world, Organism* other)
+bool Fox::breeding(Organism* other)
 {
 	if (this->GetBreedingTimeout() == 0 && other->GetBreedingTimeout() == 0)
 	{
 		vector<COORDS> area = PrepareArea(other);
-		COORDS newCreatureCoords = RandomCoords(area, world);
+		COORDS newCreatureCoords = RandomCoords(area);
 		if (newCreatureCoords != make_pair(-1, -1))
 		{
 			Fox* child = new Fox(newCreatureCoords.first, newCreatureCoords.second, world);
@@ -63,7 +63,7 @@ bool Fox::IsStronger(COORDS a, COORDS b, World* world)
 	return strengthA > strengthB;
 }
 
-vector<COORDS> Fox::CheckSurrounding(World* world, COORDS coords, int action)
+vector<COORDS> Fox::CheckSurrounding(COORDS coords, int action)
 {
 	int x1 = coords.first - 1,
 		x2 = coords.first + 1,

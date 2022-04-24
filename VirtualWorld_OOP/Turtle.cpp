@@ -1,22 +1,22 @@
 #include "Turtle.h"
 #include "World.h"
 
-Turtle::Turtle(int x, int y, World* world) : Animal(world, 'T', 2, 1, 0, make_pair(x, y), 0)
+Turtle::Turtle(int x, int y, World* world) : Animal(world, 'T', 2, 1, make_pair(x, y))
 {
 	world->worldBoard[y][x] = sign;
 	CREATURES temp = world->GetCreaturesArray();
 	temp.push_back(this);
 	world->SetCreaturesArray(temp);
 }
-void Turtle::action(World* world)
+void Turtle::action()
 {
 	COORDS currentCoords = GetCoordinates();
-	COORDS newCoords = RandomCoords(CheckSurrounding(world, currentCoords, 0), world);
+	COORDS newCoords = RandomCoords(CheckSurrounding(currentCoords, 0));
 	if(GenerateProbability())
 	{
-		if (CheckIfOrganism(newCoords, world))
+		if (CheckIfOrganism(newCoords))
 		{
-			Organism* other = FindOrganism(newCoords, world);
+			Organism* other = FindOrganism(newCoords);
 			other->collision(this);
 
 		}
@@ -34,7 +34,7 @@ void Turtle::action(World* world)
 void Turtle::collision(Organism* attackingOrganism) {
 	if (this->GetSign() == attackingOrganism->GetSign())
 	{
-		if (breeding(world, this))
+		if (breeding(this))
 			world->CreateLog(this, this, BREED, world);
 		else
 			world->CreateLog(this, this, BREEDTIME, world);
@@ -101,12 +101,12 @@ bool Turtle::IsBlocked(Organism* other)
 	return 0;
 }
 
-bool Turtle::breeding(World* world, Organism* other)
+bool Turtle::breeding(Organism* other)
 {
 	if (this->GetBreedingTimeout() == 0 && other->GetBreedingTimeout() == 0)
 	{
 		vector<COORDS> area = PrepareArea(other);
-		COORDS newCreatureCoords = RandomCoords(area, world);
+		COORDS newCreatureCoords = RandomCoords(area);
 		if (newCreatureCoords != make_pair(-1, -1))
 		{
 			Turtle* child = new Turtle(newCreatureCoords.first, newCreatureCoords.second, world);

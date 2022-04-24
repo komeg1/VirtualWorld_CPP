@@ -2,19 +2,19 @@
 #include "World.h"
 #include "Wolf.h"
 
-Animal::Animal(World* world, char sign, int strength, int initiative, int lifeTime, COORDS coordinates,int breedingTimeout): 
-	Organism(world,sign,strength,initiative,lifeTime,coordinates,breedingTimeout)
+Animal::Animal(World* world, char sign, int strength, int initiative, COORDS coordinates) :
+	Organism(world, sign, strength, initiative,  coordinates)
 {
 }
-bool Animal::CheckIfOrganism(COORDS newCoords, World* world) {
+bool Animal::CheckIfOrganism(COORDS newCoords) {
 	if (world->worldBoard[newCoords.second][newCoords.first] == FIELD)
 		return 0;
 	return 1;
 }
 
 vector<COORDS> Animal::PrepareArea(Organism* other) {
-	vector<COORDS> thisArea = CheckSurrounding(world, coordinates, 1),
-		otherArea = CheckSurrounding(world, other->GetCoordinates(), 1);
+	vector<COORDS> thisArea = CheckSurrounding(coordinates, 1),
+		otherArea = CheckSurrounding(other->GetCoordinates(), 1);
 
 	for (int i = 0; i < otherArea.size(); i++)
 		thisArea.push_back(otherArea[i]);
@@ -45,21 +45,21 @@ void Animal::Kill(Organism* a, bool won)
 
 }
 
-Organism* Animal ::FindOrganism(COORDS newCoords, World* world) {
-	for (Organism* a : world->GetCreaturesArray())
+Organism* Animal ::FindOrganism(COORDS newCoords) {
+	for (Organism* a : this->world->GetCreaturesArray())
 	{
 		if (a->GetCoordinates() == newCoords)
 			return a;
 	}
 	return nullptr;
 }
-void Animal::action(World* world)
+void Animal::action()
 {
 		COORDS currentCoords = GetCoordinates();
-		COORDS newCoords = RandomCoords(CheckSurrounding(world, currentCoords, 0),world);
-		if (CheckIfOrganism(newCoords,world))
+		COORDS newCoords = RandomCoords(CheckSurrounding(currentCoords, 0));
+		if (CheckIfOrganism(newCoords))
 		{
-			Organism* other = FindOrganism(newCoords,world);
+			Organism* other = FindOrganism(newCoords);
 			other->collision(this);
 
 		}
@@ -72,6 +72,7 @@ void Animal::action(World* world)
 			this->breedingTimeout--;
 
 
+
 		
 	}
 
@@ -80,10 +81,10 @@ void Animal::collision(Organism* attackingOrganism)
 {
 	if (this->GetSign() == attackingOrganism->GetSign())
 	{
-		if (breeding(world, this))
-			world->CreateLog(this, this, BREED, world);
+		if (breeding(this))
+			this->world->CreateLog(this, this, BREED, world);
 		else
-			world->CreateLog(this, this, BREEDTIME, world);
+			this->world->CreateLog(this, this, BREEDTIME, world);
 		return;
 	}
 
@@ -133,10 +134,13 @@ void Animal::collision(Organism* attackingOrganism)
 
 
 
+
+
 bool Animal::IsBlocked(Organism* other)
 {
 	return false;
 }
+
 
 Animal::~Animal()
 {

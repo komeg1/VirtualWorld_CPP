@@ -1,6 +1,6 @@
 #include "Antelope.h"
 #include "World.h"
-Antelope::Antelope(int x, int y, World* world) : Animal(world, 'A', 4, 4, 0, make_pair(x, y), 0) {
+Antelope::Antelope(int x, int y, World* world) : Animal(world, 'A', 4, 4, make_pair(x, y)) {
 	world->worldBoard[y][x] = sign;
 	CREATURES temp = world->GetCreaturesArray();
 	temp.push_back(this);
@@ -11,7 +11,7 @@ void Antelope::collision(Organism* attackingOrganism)
 {
 	if (this->GetSign() == attackingOrganism->GetSign())
 	{
-		if (breeding(world, this))
+		if (breeding(this))
 			world->CreateLog(this, this, BREED, world);
 		else
 			world->CreateLog(this, this, BREEDTIME, world);
@@ -63,12 +63,12 @@ void Antelope::collision(Organism* attackingOrganism)
 	return;
 }
 
-bool Antelope::breeding(World* world, Organism* other)
+bool Antelope::breeding(Organism* other)
 {
 	if (this->GetBreedingTimeout() == 0 && other->GetBreedingTimeout() == 0)
 	{
 		vector<COORDS> area = PrepareArea(other);
-		COORDS newCreatureCoords = RandomCoords(area, world);
+		COORDS newCreatureCoords = RandomCoords(area);
 		if (newCreatureCoords != make_pair(-1, -1))
 		{
 			Antelope* child = new Antelope(newCreatureCoords.first, newCreatureCoords.second, world);
@@ -89,7 +89,7 @@ bool Antelope::IsBlocked(Organism* other)
 	return 0;
 }
 
-vector<COORDS> Antelope::CheckSurrounding(World* world, COORDS coords, int action)
+vector<COORDS> Antelope::CheckSurrounding(COORDS coords, int action)
 {
 	int x1 = coords.first - 2,
 		x2 = coords.first + 2,
