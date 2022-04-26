@@ -4,6 +4,7 @@
 #include <utility>
 #include <string>
 #include <vector>
+#include <fstream>
 class Organism;
 class World;
 using namespace std;
@@ -15,4 +16,6 @@ public:
 	void CreateRandomGame();
 	World* PrepareWorld(int wolfAmount, int sheepAmount, int foxAmount, int turtleAmount,int antelopeAmount, int worldSizeX, int worldSizeY);
 	void StartSimulation(World* world);
+	void SaveToFile(World* world);
+	void ReadGameFromFile();
 };

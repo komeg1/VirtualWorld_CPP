@@ -13,6 +13,7 @@
 #define HUMAN 'H'
 #define PLANT_BASE_INITIATIVE 0
 #define SKILL_TURN_AMNT 5
+#define SAVE_GAME 51
 
 enum Logs {
 	KILL=1,

@@ -20,6 +20,14 @@ World::World(): world_x(20), world_y(20), turn(1)
 	UpdateBoard();
 }
 
+World::World(int x, int y, int turn) : world_x(x), world_y(y), turn(turn)
+{
+	worldBoard = new char* [world_y];
+	for (int i = 0; i < world_y; i++)
+		worldBoard[i] = new char[world_x];
+	UpdateBoard();
+}
+
 int World::GetWorldX() const
 {
 	return world_x;
@@ -92,7 +100,7 @@ void World::PrintConsole() {
 	Draw();
 	PrintLogs(this);
 	PrintHumanInformation();
-	Sleep(500);
+	//Sleep(500);
 	
 }
 void World::PrintHumanInformation() {
@@ -159,6 +167,7 @@ void World::CreateLog(Organism* a, Organism* b, int log_type, World* world)
 	case BREEDTIME:
 		//tmpmsg << "-NIEUDANA PROBA ROZMNOZENIA: " << ac << " na polu x: " << STR(b->GetCoordinates().first + 1) << " y: " << STR(b->GetCoordinates().second + 1);
 		//finalmsg = tmpmsg.str();
+		return;
 		break;
 	case BLOCK:
 		tmpmsg<<"-BLOK: "<<ac<< " zablokowal atak "<<bc<< " na polu x: " << STR(b->GetCoordinates().first + 1) << " y: " << STR(b->GetCoordinates().second + 1);

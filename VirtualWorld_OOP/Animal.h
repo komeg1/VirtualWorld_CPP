@@ -5,15 +5,16 @@ class Animal : public Organism
 {
 public:
 	Animal(World* world, char sign, int strength, int initative, COORDS coordinates);
+	Animal(World* world, char sign, int strength, int initative, COORDS coordinates, int lifetime, int breedingTimeout);
+	bool CheckIfOrganism(COORDS coords);
 	void Action() override;
 	void Collision(Organism* other) override;
-	virtual void CreateChild(COORDS newCoords, Organism* other) = 0;
-	vector<COORDS> PrepareArea(Organism* other);
-	bool CheckIfOrganism(COORDS coords);
 	void Kill(Organism* a, bool won)override;
+	vector<COORDS> PrepareArea(Organism* other);
 	
 	virtual bool Breeding(Organism* other);
 	virtual bool IsBlocked(Organism* other);
+	virtual void CreateChild(COORDS newCoords, Organism* other) = 0;
 	~Animal() override;
 	
 

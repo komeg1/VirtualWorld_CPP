@@ -5,7 +5,10 @@
 Grass::Grass(int x, int y, World* world) : Plant(world, '~', 0, make_pair(x, y)) {
 	AddToWorld(this);
 }
-
+Grass::Grass(World* world, char sign, int strength, int initative, COORDS coordinates, int lifetime, int breedingTimeout) :
+	Plant(world, sign, strength, initiative, coordinates, lifetime, breedingTimeout) {
+	AddToWorld(this);
+}
 
 Grass::~Grass() {
 
@@ -21,8 +24,8 @@ void Grass::Spread()
 			world->CreateLog(this, this, BREED, world);
 			COORDS newCoords = RandomCoords(temp);
 			Grass* temp = new Grass(newCoords.first, newCoords.second, this->world);
-			temp->SetBreedingTimeout();
-			this->SetBreedingTimeout();
+			temp->SetbreedingTimeout();
+			this->SetbreedingTimeout();
 		}
 
 }

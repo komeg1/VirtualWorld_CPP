@@ -3,7 +3,10 @@
 Antelope::Antelope(int x, int y, World* world) : Animal(world, 'A', 4, 4, make_pair(x, y)) {
 	AddToWorld(this);
 }
-
+Antelope::Antelope(World* world, char sign, int strength, int initative, COORDS coordinates, int lifetime, int breedingTimeout) :
+	Animal(world, sign, strength, initiative, coordinates, lifetime, breedingTimeout) {
+	AddToWorld(this);
+}
 void Antelope::Collision(Organism* attackingOrganism)
 {
 	if (this->GetSign() == attackingOrganism->GetSign())
@@ -62,9 +65,9 @@ void Antelope::Collision(Organism* attackingOrganism)
 
 void Antelope::CreateChild(COORDS newCreatureCoords, Organism* other) {
 	Antelope* child = new Antelope(newCreatureCoords.first, newCreatureCoords.second, world);
-	this->SetBreedingTimeout();
-	other->SetBreedingTimeout();
-	child->SetBreedingTimeout();
+	this->SetbreedingTimeout();
+	other->SetbreedingTimeout();
+	child->SetbreedingTimeout();
 }
 
 bool Antelope::IsBlocked(Organism* other)

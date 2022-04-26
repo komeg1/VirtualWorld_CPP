@@ -1,7 +1,13 @@
 #include "Organism.h"
 #include "World.h"
 #include "Human.h"
-Organism::Organism(World* world, char sign, int strength, int initiative, COORDS coordinates) : 
+
+
+Organism::Organism(World* world, char sign, int strength, int initative, COORDS coordinates, int lifetime, int breedingTimeout) :
+	world(world), sign(sign), strength(strength), initiative(initiative), coordinates(coordinates), lifeTime(lifetime), breedingTimeout(breedingTimeout) {
+}
+
+Organism::Organism(World* world, char sign, int strength, int initiative, COORDS coordinates) :
 	world(world), sign(sign), strength(strength), initiative(initiative), coordinates(coordinates)
 {
 
@@ -29,9 +35,9 @@ void Organism::AddToWorld(Organism* a)
 	world->SetCreaturesArray(temp);
 }
 
-void Organism::SetBreedingTimeout()
+void Organism::SetbreedingTimeout()
 {
-	BreedingTimeout = BREEDING_CNTDOWN;
+	breedingTimeout = BREEDING_CNTDOWN;
 }
 
 void Organism::SetCoordinates(pair<int, int> coordinates)
@@ -62,6 +68,8 @@ bool Organism::Block(Organism* other)
 }
 
 
+
+
 char Organism::GetSign()const
 {
 	return sign;
@@ -90,9 +98,9 @@ int Organism::GetIndex() const
 			return i;
 }
 
-int Organism::GetBreedingTimeout() const
+int Organism::GetbreedingTimeout() const
 {
-	return BreedingTimeout;
+	return breedingTimeout;
 }
 
 bool Organism::GetSkillIsActive() const

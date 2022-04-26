@@ -3,16 +3,18 @@
 Plant::Plant(World* world, char sign, int strength, COORDS coordinates):
 Organism(world, sign, strength, PLANT_BASE_INITIATIVE,coordinates) {
 }
-
+Plant::Plant(World* world, char sign, int strength, int initative, COORDS coordinates, int lifetime, int breedingTimeout) :
+	Organism(world, sign, strength, initiative, coordinates, lifetime, breedingTimeout) {
+}
 void Plant::Action()
 {
-	if (SpreadProbability() && this->GetBreedingTimeout() == 0)
+	if (SpreadProbability() && this->GetbreedingTimeout() == 0)
 	{
 		this->Spread();
 		return;
 	}
-	if (this->GetBreedingTimeout() > 0)
-		this->BreedingTimeout--;
+	if (this->GetbreedingTimeout() > 0)
+		this->breedingTimeout--;
 	
 }
 

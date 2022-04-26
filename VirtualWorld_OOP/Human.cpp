@@ -5,6 +5,10 @@
 Human::Human(int x, int y, World* world) : Animal(world, 'H', 5, 4, make_pair(x, y)) {
 	AddToWorld(this);
 }
+Human::Human(World* world, char sign, int strength, int initative, COORDS coordinates, int lifetime, int breedingTimeout, bool skillIsActive, int skillTimeout, int skillTurnLeft) :
+	Animal(world, sign, strength, initiative, coordinates, lifetime, breedingTimeout), skillIsActive(skillIsActive), skillTimeout(skillTimeout), skillTurnLeft(skillTurnLeft) {
+	AddToWorld(this);
+}
 void Human::UpdateCoords(COORDS* newCoords,int skill,int key)
 {
 
@@ -72,18 +76,25 @@ void Human::Action() {
 		cout << "\nPodaj ruch czlowieka:";
 		
 		key = _getch();
-		cout << key;
 		if (key == KEY_SKILL)
 		{
 			ActivateSkill();
 			key = _getch();
+		}
+		else if (key == SAVE_GAME)
+		{
+			GameFunctions temp;
+			temp.SaveToFile(this->world);
+			key = _getch();
+
 		}
 		key = _getch();
 		system("CLS");
 		if (key != KEY_UP && key != KEY_LEFT && key != KEY_RIGHT && key != KEY_DOWN)
 			key = 0;
 	}
-		if(GetSkillIsActive()==1)
+
+		if(GetSkillIsActive()==1&&rand()%100+1<=50)
 			UpdateCoords(&newCoords,2,key);
 		else
 			UpdateCoords(&newCoords, 1, key);

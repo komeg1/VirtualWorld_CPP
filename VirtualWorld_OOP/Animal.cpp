@@ -6,6 +6,12 @@ Animal::Animal(World* world, char sign, int strength, int initiative, COORDS coo
 	Organism(world, sign, strength, initiative,  coordinates)
 {
 }
+Animal::Animal(World* world, char sign, int strength, int initative, COORDS coordinates, int lifetime, int breedingTimeout) :
+	Organism(world, sign, strength, initiative, coordinates,lifetime,breedingTimeout) {
+}
+
+
+
 bool Animal::CheckIfOrganism(COORDS newCoords) {
 	if (world->worldBoard[newCoords.second][newCoords.first] == FIELD)
 		return 0;
@@ -61,8 +67,8 @@ void Animal::Action()
 			this->SetCoordinates(newCoords);
 			this->UpdateLifeTime();
 		}
-		if (this->GetBreedingTimeout() > 0)
-			this->BreedingTimeout--;
+		if (this->GetbreedingTimeout() > 0)
+			this->breedingTimeout--;
 
 
 
@@ -72,7 +78,7 @@ bool Animal::Breeding(Organism* other)
 {
 	if (this->GetSign() == HUMAN)
 		return 0;
-	if (this->GetBreedingTimeout() == 0 && other->GetBreedingTimeout() == 0)
+	if (this->GetbreedingTimeout() == 0 && other->GetbreedingTimeout() == 0)
 	{
 		vector<COORDS> area = PrepareArea(other);
 		COORDS newCreatureCoords = RandomCoords(area);

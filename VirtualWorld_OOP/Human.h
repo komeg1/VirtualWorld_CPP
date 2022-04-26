@@ -8,6 +8,7 @@ private:
 	int skillTimeout = 0;
 public:
 	Human(int x, int y, World* world);
+	Human(World* world, char sign, int strength, int initative, COORDS coordinates, int lifetime, int breedingTimeout,bool skillIsActive, int skillTimeout, int skillTurnLeft);
 	void Action()override;
 	bool Breeding(Organism* other)override;
 	void UpdateCoords(COORDS* newCoords,int skill,int key);

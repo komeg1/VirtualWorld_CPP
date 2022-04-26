@@ -17,7 +17,7 @@ public:
 	char** worldBoard;
 	World(int x, int y);
 	World();
-
+	World(int x, int y, int turn);
 	int GetTurn() const;
 	int GetWorldX() const;
 	int GetWorldY() const;

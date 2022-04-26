@@ -4,6 +4,10 @@ Fox::Fox(int x, int y, World* world) : Animal(world, 'F', 3, 7, make_pair(x, y))
 {
 	AddToWorld(this);
 }
+Fox::Fox(World* world, char sign, int strength, int initative, COORDS coordinates, int lifetime, int breedingTimeout) :
+	Animal(world, sign, strength, initiative, coordinates, lifetime, breedingTimeout) {
+	AddToWorld(this);
+}
 
 void Fox::Action()
 {
@@ -21,14 +25,14 @@ void Fox::Action()
 			this->SetCoordinates(newCoords);
 		this->UpdateLifeTime();
 	}
-	if (this->GetBreedingTimeout() > 0)
-		this->BreedingTimeout--;
+	if (this->GetbreedingTimeout() > 0)
+		this->breedingTimeout--;
 }
 void Fox::CreateChild(COORDS newCreatureCoords, Organism* other) {
 	Fox* child = new Fox(newCreatureCoords.first, newCreatureCoords.second, world);
-	this->SetBreedingTimeout();
-	other->SetBreedingTimeout();
-	child->SetBreedingTimeout();
+	this->SetbreedingTimeout();
+	other->SetbreedingTimeout();
+	child->SetbreedingTimeout();
 }
 
 

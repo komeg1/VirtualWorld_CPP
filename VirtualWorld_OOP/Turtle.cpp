@@ -5,6 +5,10 @@ Turtle::Turtle(int x, int y, World* world) : Animal(world, 'T', 2, 1, make_pair(
 {
 	AddToWorld(this);
 }
+Turtle::Turtle(World* world, char sign, int strength, int initative, COORDS coordinates, int lifetime, int breedingTimeout) :
+	Animal(world, sign, strength, initiative, coordinates, lifetime, breedingTimeout) {
+	AddToWorld(this);
+}
 void Turtle::Action()
 {
 	COORDS currentCoords = GetCoordinates();
@@ -22,8 +26,8 @@ void Turtle::Action()
 			this->SetCoordinates(newCoords);
 			this->UpdateLifeTime();
 		}
-		if (this->GetBreedingTimeout() > 0)
-			this->BreedingTimeout--;
+		if (this->GetbreedingTimeout() > 0)
+			this->breedingTimeout--;
 
 	}
 
@@ -100,9 +104,9 @@ bool Turtle::IsBlocked(Organism* other)
 
 void Turtle::CreateChild(COORDS newCreatureCoords, Organism* other) {
 	Turtle* child = new Turtle(newCreatureCoords.first, newCreatureCoords.second, world);
-	this->SetBreedingTimeout();
-	other->SetBreedingTimeout();
-	child->SetBreedingTimeout();
+	this->SetbreedingTimeout();
+	other->SetbreedingTimeout();
+	child->SetbreedingTimeout();
 }
 
 Turtle::~Turtle() {
