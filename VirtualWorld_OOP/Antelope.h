@@ -4,10 +4,10 @@ class Antelope : public Animal
 {
 public:
 	Antelope(int x,int y, World*world);
-	void collision(Organism* a)override;
+	void Collision(Organism* a)override;
 	bool IsBlocked(Organism* other)override;
 	vector<COORDS> CheckSurrounding(COORDS coords, int action)override;
-	bool breeding(Organism* other);
+	void CreateChild(COORDS newCoords, Organism* other)override;
 	~Antelope();
 };
 

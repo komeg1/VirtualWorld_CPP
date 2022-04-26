@@ -74,7 +74,7 @@ void World::NextTurn() {
 	logs.push_back(turnLog);
 	for (int i = 0; i < creaturesArray.size(); i++)
 	{
-			creaturesArray[i]->action();
+			creaturesArray[i]->Action();
 			UpdateBoard();
 			
 	}

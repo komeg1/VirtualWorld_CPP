@@ -2,20 +2,17 @@
 #include "World.h"
 Fox::Fox(int x, int y, World* world) : Animal(world, 'F', 3, 7, make_pair(x, y))
 {
-	world->worldBoard[y][x] = sign;
-	CREATURES temp = world->GetCreaturesArray();
-	temp.push_back(this);
-	world->SetCreaturesArray(temp);
+	AddToWorld(this);
 }
 
-void Fox::action()
+void Fox::Action()
 {
 	COORDS currentCoords = GetCoordinates();
 	COORDS newCoords = RandomCoords(CheckSurrounding(currentCoords, 0));
 	if (newCoords!=make_pair(-1,-1)&&CheckIfOrganism(newCoords))
 	{
 		Organism* other = FindOrganism(newCoords);
-		other->collision(this);
+		other->Collision(this);
 
 	}
 	else
@@ -25,25 +22,14 @@ void Fox::action()
 		this->UpdateLifeTime();
 	}
 	if (this->GetBreedingTimeout() > 0)
-		this->breedingTimeout--;
+		this->BreedingTimeout--;
 }
-bool Fox::breeding(Organism* other)
-{
-	if (this->GetBreedingTimeout() == 0 && other->GetBreedingTimeout() == 0)
-	{
-		vector<COORDS> area = PrepareArea(other);
-		COORDS newCreatureCoords = RandomCoords(area);
-		if (newCreatureCoords != make_pair(-1, -1))
-		{
-			Fox* child = new Fox(newCreatureCoords.first, newCreatureCoords.second, world);
-			child->SetBreedingTimeout();
-			this->SetBreedingTimeout();
-			other->SetBreedingTimeout();
-			return 1;
-		}
-	}
-	return 0;
-	}
+void Fox::CreateChild(COORDS newCreatureCoords, Organism* other) {
+	Fox* child = new Fox(newCreatureCoords.first, newCreatureCoords.second, world);
+	this->SetBreedingTimeout();
+	other->SetBreedingTimeout();
+	child->SetBreedingTimeout();
+}
 
 
 

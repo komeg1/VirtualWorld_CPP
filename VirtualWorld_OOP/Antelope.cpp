@@ -1,17 +1,14 @@
 #include "Antelope.h"
 #include "World.h"
 Antelope::Antelope(int x, int y, World* world) : Animal(world, 'A', 4, 4, make_pair(x, y)) {
-	world->worldBoard[y][x] = sign;
-	CREATURES temp = world->GetCreaturesArray();
-	temp.push_back(this);
-	world->SetCreaturesArray(temp);
+	AddToWorld(this);
 }
 
-void Antelope::collision(Organism* attackingOrganism)
+void Antelope::Collision(Organism* attackingOrganism)
 {
 	if (this->GetSign() == attackingOrganism->GetSign())
 	{
-		if (breeding(this))
+		if (Breeding(this))
 			world->CreateLog(this, this, BREED, world);
 		else
 			world->CreateLog(this, this, BREEDTIME, world);
@@ -63,22 +60,11 @@ void Antelope::collision(Organism* attackingOrganism)
 	return;
 }
 
-bool Antelope::breeding(Organism* other)
-{
-	if (this->GetBreedingTimeout() == 0 && other->GetBreedingTimeout() == 0)
-	{
-		vector<COORDS> area = PrepareArea(other);
-		COORDS newCreatureCoords = RandomCoords(area);
-		if (newCreatureCoords != make_pair(-1, -1))
-		{
-			Antelope* child = new Antelope(newCreatureCoords.first, newCreatureCoords.second, world);
-			child->SetBreedingTimeout();
-			this->SetBreedingTimeout();
-			other->SetBreedingTimeout();
-			return 1;
-		}
-	}
-	return 0;
+void Antelope::CreateChild(COORDS newCreatureCoords, Organism* other) {
+	Antelope* child = new Antelope(newCreatureCoords.first, newCreatureCoords.second, world);
+	this->SetBreedingTimeout();
+	other->SetBreedingTimeout();
+	child->SetBreedingTimeout();
 }
 
 bool Antelope::IsBlocked(Organism* other)

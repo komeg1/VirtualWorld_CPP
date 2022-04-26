@@ -12,6 +12,8 @@
 #include "Antelope.h"
 #include "Dandelion.h"
 #include "Guarana.h"
+#include "Borscht.h"
+#include "Nightshade.h"
 using namespace std;
 
 
@@ -84,6 +86,16 @@ void GameFunctions::CreateRandomGame()
 World* GameFunctions::PrepareWorld(int wolfAmount, int sheepAmount, int foxAmount,int turtleAmount,int antelopeAmount,int worldSizeX, int worldSizeY) {
     World* world = new World(worldSizeX,worldSizeY);
     int x=-1, y=-1;
+    for (int i = 0; i < 2; i++)
+    {
+        do {
+            x = rand() % worldSizeX;
+            y = rand() % worldSizeY;
+
+        } while (world->worldBoard[y][x] != FIELD);
+
+        Borscht* wolf = new Borscht(x, y, world);
+    }
     for (int i = 0; i < wolfAmount; i++)
     {
         do {

@@ -3,13 +3,10 @@
 #include <Windows.h>
 #include <conio.h>
 Human::Human(int x, int y, World* world) : Animal(world, 'H', 5, 4, make_pair(x, y)) {
-	world->worldBoard[y][x] = sign;
-	CREATURES temp = world->GetCreaturesArray();
-	temp.push_back(this);
-	world->SetCreaturesArray(temp);
+	AddToWorld(this);
 }
 
-void Human::action() {
+void Human::Action() {
 	COORDS currentCoords = GetCoordinates();
 	COORDS newCoords = currentCoords;
 	int c = 0;
@@ -61,7 +58,7 @@ void Human::action() {
 	if (CheckIfOrganism(newCoords))
 	{
 		Organism* other = FindOrganism(newCoords);
-		other->collision(this);
+		other->Collision(this);
 
 	}
 	else
@@ -71,10 +68,16 @@ void Human::action() {
 	}
 }
 
-bool Human::breeding(Organism* other)
+bool Human::Breeding(Organism* other)
 {
 	if(other->GetSign()==this->GetSign())
-	return true;
+	return 1;
+	return 0;
+}
+
+void Human::CreateChild(COORDS newCoords, Organism* other)
+{
+	return;
 }
 
 

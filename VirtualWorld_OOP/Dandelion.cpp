@@ -1,15 +1,12 @@
 #include "Dandelion.h"
 #include "World.h"
-Dandelion::Dandelion(int x, int y, World* world) : Plant(world, '&', 0, 0, make_pair(x, y)) {
-	world->worldBoard[y][x] = sign;
-	CREATURES temp = world->GetCreaturesArray();
-	temp.push_back(this);
-	world->SetCreaturesArray(temp);
+Dandelion::Dandelion(int x, int y, World* world) : Plant(world, '&', 0, make_pair(x, y)) {
+	AddToWorld(this);
 }
 
 Dandelion::~Dandelion(){}
 
-void Dandelion::action() {
+void Dandelion::Action() {
 	
 	for (int i = 0; i < 3; i++)
 	{
@@ -20,7 +17,7 @@ void Dandelion::action() {
 		}
 	}
 		if (this->GetBreedingTimeout() > 0)
-			this->breedingTimeout--;
+			this->BreedingTimeout--;
 
 	
 }

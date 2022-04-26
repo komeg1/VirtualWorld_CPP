@@ -1,10 +1,10 @@
 #include "Plant.h"
 #include "World.h"
-Plant::Plant(World* world, char sign, int strength, int initiative, COORDS coordinates):
-Organism(world, sign, strength, initiative,coordinates) {
+Plant::Plant(World* world, char sign, int strength, COORDS coordinates):
+Organism(world, sign, strength, PLANT_BASE_INITIATIVE,coordinates) {
 }
 
-void Plant::action()
+void Plant::Action()
 {
 	if (SpreadProbability() && this->GetBreedingTimeout() == 0)
 	{
@@ -12,11 +12,11 @@ void Plant::action()
 		return;
 	}
 	if (this->GetBreedingTimeout() > 0)
-		this->breedingTimeout--;
+		this->BreedingTimeout--;
 	
 }
 
-void Plant::collision(Organism* other)
+void Plant::Collision(Organism* other)
 {
 	if (this->GetStrength() == other->GetStrength())
 	{

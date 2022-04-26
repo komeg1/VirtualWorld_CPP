@@ -1,10 +1,7 @@
 #include "Nightshade.h"
 #include "World.h"
-Nightshade::Nightshade(int x, int y, World* world) : Plant(world, '$', 0, 0, make_pair(x, y)) {
-	world->worldBoard[y][x] = sign;
-	CREATURES temp = world->GetCreaturesArray();
-	temp.push_back(this);
-	world->SetCreaturesArray(temp);
+Nightshade::Nightshade(int x, int y, World* world) : Plant(world, '!', 0, make_pair(x, y)) {
+	AddToWorld(this);
 }
 
 void Nightshade::Spread() {
@@ -24,7 +21,7 @@ Nightshade::~Nightshade()
 {
 }
 
-void Nightshade::collision(Organism* other)
+void Nightshade::Collision(Organism* other)
 {
 
 		Kill(other, 1);

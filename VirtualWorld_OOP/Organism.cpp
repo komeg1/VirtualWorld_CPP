@@ -11,11 +11,27 @@ void Organism::GuaranaBoost()
 {
 		this->strength += 3;
 }
-
+Organism* Organism::FindOrganism(COORDS newCoords) {
+	for (Organism* a : this->world->GetCreaturesArray())
+	{
+		if (a->GetCoordinates() == newCoords)
+			return a;
+	}
+	return nullptr;
+}
+void Organism::AddToWorld(Organism* a)
+{
+	int x = a->GetCoordinates().first,
+		y = a->GetCoordinates().second;
+	world->worldBoard[y][x] = a->GetSign();
+	CREATURES temp = world->GetCreaturesArray();
+	temp.push_back(a);
+	world->SetCreaturesArray(temp);
+}
 
 void Organism::SetBreedingTimeout()
 {
-	breedingTimeout = BREEDING_CNTDOWN;
+	BreedingTimeout = BREEDING_CNTDOWN;
 }
 
 void Organism::SetCoordinates(pair<int, int> coordinates)
@@ -76,7 +92,7 @@ int Organism::GetIndex() const
 
 int Organism::GetBreedingTimeout() const
 {
-	return breedingTimeout;
+	return BreedingTimeout;
 }
 
 COORDS Organism::GetCoordinates()const

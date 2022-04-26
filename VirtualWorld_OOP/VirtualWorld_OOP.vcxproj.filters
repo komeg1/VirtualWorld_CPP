@@ -28,55 +28,70 @@
     <Filter Include="Pliki nagłówkowe\Game\World\Organisms\Plants">
       <UniqueIdentifier>{a7aa70fa-39c4-4043-8c09-c8c8f65a21c7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Pliki źródłowe\Game">
+      <UniqueIdentifier>{f13c7f12-b958-41bd-8fb7-81a33a008e7d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pliki źródłowe\Game\Organism">
+      <UniqueIdentifier>{b854c89a-b05a-46c8-9e58-2b97e737c8c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pliki źródłowe\Game\Organism\Animal">
+      <UniqueIdentifier>{6d06490a-1e66-49d9-a91d-22a885feff83}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pliki źródłowe\Game\Organism\Plant">
+      <UniqueIdentifier>{ee881074-c8da-426f-930d-2a97fa901b0d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>Pliki źródłowe</Filter>
-    </ClCompile>
-    <ClCompile Include="World.cpp">
-      <Filter>Pliki źródłowe</Filter>
-    </ClCompile>
-    <ClCompile Include="Organism.cpp">
-      <Filter>Pliki źródłowe</Filter>
-    </ClCompile>
-    <ClCompile Include="Animal.cpp">
-      <Filter>Pliki źródłowe</Filter>
-    </ClCompile>
-    <ClCompile Include="Wolf.cpp">
-      <Filter>Pliki źródłowe</Filter>
-    </ClCompile>
-    <ClCompile Include="GameFunctions.cpp">
-      <Filter>Pliki źródłowe</Filter>
-    </ClCompile>
     <ClCompile Include="Sheep.cpp">
-      <Filter>Pliki źródłowe</Filter>
-    </ClCompile>
-    <ClCompile Include="Fox.cpp">
-      <Filter>Pliki źródłowe</Filter>
-    </ClCompile>
-    <ClCompile Include="Human.cpp">
-      <Filter>Pliki źródłowe</Filter>
+      <Filter>Pliki źródłowe\Game\Organism\Animal</Filter>
     </ClCompile>
     <ClCompile Include="Turtle.cpp">
-      <Filter>Pliki źródłowe</Filter>
+      <Filter>Pliki źródłowe\Game\Organism\Animal</Filter>
+    </ClCompile>
+    <ClCompile Include="Wolf.cpp">
+      <Filter>Pliki źródłowe\Game\Organism\Animal</Filter>
+    </ClCompile>
+    <ClCompile Include="Animal.cpp">
+      <Filter>Pliki źródłowe\Game\Organism\Animal</Filter>
     </ClCompile>
     <ClCompile Include="Antelope.cpp">
-      <Filter>Pliki źródłowe</Filter>
+      <Filter>Pliki źródłowe\Game\Organism\Animal</Filter>
     </ClCompile>
-    <ClCompile Include="Plant.cpp">
-      <Filter>Pliki źródłowe</Filter>
+    <ClCompile Include="Fox.cpp">
+      <Filter>Pliki źródłowe\Game\Organism\Animal</Filter>
     </ClCompile>
-    <ClCompile Include="Grass.cpp">
-      <Filter>Pliki źródłowe</Filter>
+    <ClCompile Include="Human.cpp">
+      <Filter>Pliki źródłowe\Game\Organism\Animal</Filter>
     </ClCompile>
     <ClCompile Include="Dandelion.cpp">
-      <Filter>Pliki źródłowe</Filter>
+      <Filter>Pliki źródłowe\Game\Organism\Plant</Filter>
+    </ClCompile>
+    <ClCompile Include="Grass.cpp">
+      <Filter>Pliki źródłowe\Game\Organism\Plant</Filter>
     </ClCompile>
     <ClCompile Include="Guarana.cpp">
-      <Filter>Pliki źródłowe</Filter>
+      <Filter>Pliki źródłowe\Game\Organism\Plant</Filter>
     </ClCompile>
     <ClCompile Include="Nightshade.cpp">
-      <Filter>Pliki źródłowe</Filter>
+      <Filter>Pliki źródłowe\Game\Organism\Plant</Filter>
+    </ClCompile>
+    <ClCompile Include="Plant.cpp">
+      <Filter>Pliki źródłowe\Game\Organism\Plant</Filter>
+    </ClCompile>
+    <ClCompile Include="Organism.cpp">
+      <Filter>Pliki źródłowe\Game\Organism</Filter>
+    </ClCompile>
+    <ClCompile Include="World.cpp">
+      <Filter>Pliki źródłowe\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="GameFunctions.cpp">
+      <Filter>Pliki źródłowe\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Pliki źródłowe\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Borscht.cpp">
+      <Filter>Pliki źródłowe\Game\Organism\Plant</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -126,6 +141,9 @@
       <Filter>Pliki nagłówkowe\Game\World\Organisms\Plants</Filter>
     </ClInclude>
     <ClInclude Include="Nightshade.h">
+      <Filter>Pliki nagłówkowe\Game\World\Organisms\Plants</Filter>
+    </ClInclude>
+    <ClInclude Include="Borscht.h">
       <Filter>Pliki nagłówkowe\Game\World\Organisms\Plants</Filter>
     </ClInclude>
   </ItemGroup>

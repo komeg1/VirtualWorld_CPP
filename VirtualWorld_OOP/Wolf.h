@@ -4,7 +4,7 @@ class Wolf : public Animal
 {
 public:
 	Wolf(int x,int y, World* world);
-	bool breeding(Organism* other)override;
+	void CreateChild(COORDS newCoords, Organism* other)override;
 	~Wolf() override;
 
 };

@@ -2,11 +2,8 @@
 #include "World.h"
 
 
-Grass::Grass(int x, int y, World* world) : Plant(world, '~', 0, 0, make_pair(x, y)) {
-	world->worldBoard[y][x] = sign;
-	CREATURES temp = world->GetCreaturesArray();
-	temp.push_back(this);
-	world->SetCreaturesArray(temp);
+Grass::Grass(int x, int y, World* world) : Plant(world, '~', 0, make_pair(x, y)) {
+	AddToWorld(this);
 }
 
 

@@ -45,22 +45,15 @@ void Animal::Kill(Organism* a, bool won)
 
 }
 
-Organism* Animal ::FindOrganism(COORDS newCoords) {
-	for (Organism* a : this->world->GetCreaturesArray())
-	{
-		if (a->GetCoordinates() == newCoords)
-			return a;
-	}
-	return nullptr;
-}
-void Animal::action()
+
+void Animal::Action()
 {
 		COORDS currentCoords = GetCoordinates();
 		COORDS newCoords = RandomCoords(CheckSurrounding(currentCoords, 0));
 		if (CheckIfOrganism(newCoords))
 		{
 			Organism* other = FindOrganism(newCoords);
-			other->collision(this);
+			other->Collision(this);
 
 		}
 		else
@@ -69,19 +62,34 @@ void Animal::action()
 			this->UpdateLifeTime();
 		}
 		if (this->GetBreedingTimeout() > 0)
-			this->breedingTimeout--;
+			this->BreedingTimeout--;
 
 
 
 		
 	}
+bool Animal::Breeding(Organism* other)
+{
+	if (this->GetSign() == HUMAN)
+		return 0;
+	if (this->GetBreedingTimeout() == 0 && other->GetBreedingTimeout() == 0)
+	{
+		vector<COORDS> area = PrepareArea(other);
+		COORDS newCreatureCoords = RandomCoords(area);
+		if (newCreatureCoords != make_pair(-1, -1))
+		{
+			this->CreateChild(newCreatureCoords,other);
+			return 1;
+		}
+	}
+	return 0;
+}
 
-
-void Animal::collision(Organism* attackingOrganism)
+void Animal::Collision(Organism* attackingOrganism)
 {
 	if (this->GetSign() == attackingOrganism->GetSign())
 	{
-		if (breeding(this))
+		if (Breeding(this))
 			this->world->CreateLog(this, this, BREED, world);
 		else
 			this->world->CreateLog(this, this, BREEDTIME, world);

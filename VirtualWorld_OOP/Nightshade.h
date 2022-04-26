@@ -6,7 +6,7 @@ public:
 	Nightshade(int x, int y, World* world);
 	void Spread()override;
 	void Kill(Organism* other, bool won)override;
-	void collision(Organism* other)override;
+	void Collision(Organism* other)override;
 	~Nightshade();
 };
 

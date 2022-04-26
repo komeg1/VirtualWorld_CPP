@@ -1,11 +1,8 @@
 #include "Guarana.h"
 #include "World.h"
 #include "Animal.h"
-Guarana::Guarana(int x, int y, World* world) : Plant(world, '$', 0, 0, make_pair(x, y)) {
-	world->worldBoard[y][x] = sign;
-	CREATURES temp = world->GetCreaturesArray();
-	temp.push_back(this);
-	world->SetCreaturesArray(temp);
+Guarana::Guarana(int x, int y, World* world) : Plant(world, '$', 0, make_pair(x, y)) {
+	AddToWorld(this);
 }
 
 
@@ -26,13 +23,14 @@ Guarana::~Guarana()
 {
 }
 
-void Guarana::collision(Organism* other)
+void Guarana::Collision(Organism* other)
 {
-		world->CreateLog(other, this, BOOST, world);
+		
 		CREATURES temp = world->GetCreaturesArray();
 		temp.erase(temp.begin() + this->GetIndex());
 		world->SetCreaturesArray(temp);
 		other->GuaranaBoost();
+		world->CreateLog(other, this, BOOST, world);
 		other->SetCoordinates(this->GetCoordinates());
 		this->~Guarana();
 }
