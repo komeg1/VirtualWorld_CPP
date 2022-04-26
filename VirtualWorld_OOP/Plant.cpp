@@ -80,8 +80,7 @@ void Plant::Kill(Organism * a, bool won)
 
 bool Plant::SpreadProbability()
 {
-	int val = rand() % 100 + 1;
-	if (val <= 2)
+	if (rand() % 100 < 2)
 		return 1;
 	return 0;
 }

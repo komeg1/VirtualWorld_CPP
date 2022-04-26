@@ -31,6 +31,7 @@ public:
 	void SetLogs(vector<string> logs);
 	void NextTurn();
 	void PrintConsole();
+	void PrintHumanInformation();
 	void Draw();
 	void UpdateBoard();
 

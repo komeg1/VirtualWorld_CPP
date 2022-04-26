@@ -28,6 +28,9 @@ public:
 	int GetlifeTime()const;
 	int GetIndex() const;
 	int GetBreedingTimeout()const;
+	virtual bool GetSkillIsActive()const;
+	virtual int GetSkillTurnLeft()const;
+	virtual int GetSkillTimeout()const;
 	COORDS GetCoordinates()const;
 	void GuaranaBoost();
 	Organism* FindOrganism(COORDS coords);

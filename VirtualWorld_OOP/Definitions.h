@@ -9,8 +9,11 @@
 #define KEY_DOWN 80
 #define KEY_LEFT 75
 #define KEY_RIGHT 77
-#define HUMAN 0
+#define KEY_SKILL 102
+#define HUMAN 'H'
 #define PLANT_BASE_INITIATIVE 0
+#define SKILL_TURN_AMNT 5
+
 enum Logs {
 	KILL=1,
     BREED,

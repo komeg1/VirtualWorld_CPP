@@ -1,6 +1,6 @@
 #include "Organism.h"
 #include "World.h"
-
+#include "Human.h"
 Organism::Organism(World* world, char sign, int strength, int initiative, COORDS coordinates) : 
 	world(world), sign(sign), strength(strength), initiative(initiative), coordinates(coordinates)
 {
@@ -95,6 +95,21 @@ int Organism::GetBreedingTimeout() const
 	return BreedingTimeout;
 }
 
+bool Organism::GetSkillIsActive() const
+{
+	return false;
+}
+
+int Organism::GetSkillTurnLeft() const
+{
+	return 0;
+}
+
+int Organism::GetSkillTimeout() const
+{
+	return 0;
+}
+
 COORDS Organism::GetCoordinates()const
 {
 	return coordinates;
@@ -137,7 +152,6 @@ vector<COORDS> Organism::CheckSurrounding(COORDS coords, int action)
 
 	return availableSurrounding;
 }
-
 Organism::~Organism()
 {
 	

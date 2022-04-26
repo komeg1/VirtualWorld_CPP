@@ -11,11 +11,12 @@ void Borscht::KillAnimalsAround(vector<COORDS> area) {
 		if (organismTemp != nullptr && organismTemp->GetSign() != this->GetSign())
 		{
 			temp.erase(temp.begin() + organismTemp->GetIndex());
+			world->SetCreaturesArray(temp);
 			organismTemp->~Organism();
 		}
 
 	}
-	world->SetCreaturesArray(temp);
+	
 
 
 }
@@ -41,17 +42,18 @@ vector<COORDS> Borscht::CheckSurrounding(COORDS coords, int action)
 		{
 			if (this->world->worldBoard[i][j] == this->GetSign() && make_pair(j, i) == coords)
 				continue;	
-			else if (action == 0)
-			{
-				if (this->world->worldBoard[i][j] != FIELD && this->world->worldBoard[i][j] != this->GetSign())
-					availableSurrounding.push_back(make_pair(j, i));
-			}
-			else if (action == 1)
+			if (action == 1)
 			{
 				if (this->world->worldBoard[i][j] == FIELD)
 					availableSurrounding.push_back(make_pair(j, i));
 			}
 
+			else if (action == 0)
+			{
+				if (this->world->worldBoard[i][j] != FIELD && this->world->worldBoard[i][j] != this->GetSign())
+					availableSurrounding.push_back(make_pair(j, i));
+			}
+			
 		}
 
 
@@ -86,6 +88,9 @@ void Borscht::Collision(Organism* other) {
 	Kill(other, 1);
 	CREATURES temp = world->GetCreaturesArray();
 	temp.erase(temp.begin() + this->GetIndex());
+	world->SetCreaturesArray(temp);
+	other->~Organism();
+	this->~Borscht();
 	
 }
 Borscht::~Borscht() {

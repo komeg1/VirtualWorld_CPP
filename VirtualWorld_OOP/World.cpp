@@ -91,11 +91,31 @@ void World::PrintConsole() {
 	NAME;
 	Draw();
 	PrintLogs(this);
+	PrintHumanInformation();
+	Sleep(500);
 	
 }
+void World::PrintHumanInformation() {
+	for (int i = 0; i < this->GetCreaturesArray().size(); i++)
+	{
+		if (this->GetCreaturesArray()[i]->GetSign() == HUMAN)
+		{
+			Organism* human = this->GetCreaturesArray()[i];
+			cout << "\n\n%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n  STATYSTYKI CZLOWIEKA:\n  SILA: " << human->GetStrength() <<
+				"\n  INICJATYWA: " << human->GetInitiative() <<
+				"\n  CZAS ZYCIA: " << human->GetlifeTime() <<
+				"\n  X: " << human->GetCoordinates().first << " Y: " << human->GetCoordinates().second  <<
+				"\n  UMIEJETNOSC AKTYWNA: " << human->GetSkillIsActive()<<
+				"\n  POZOSALY CZAS UMIEJETNOSCI: " << human->GetSkillTurnLeft() <<
+				"\n  PRZERWA TUROWA UMIEJETNOSCI: "<<human->GetSkillTimeout();
+			cout << "\n%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n";
+				
+		}
+	}
+}
+
 void World::Draw()
 {
-	//cout << "              Wirtualny Swiat\n              Tomasz Krezymon\n               Informatyka gr.2 189642";
 	for (int i = 0; i <GetWorldY(); i++)
 	{
 		cout <<"            ";
@@ -118,14 +138,6 @@ void World::UpdateBoard()
 	}
 }
 
-
-
-
-
-World::~World()
-{
-}
-
 void World::CreateLog(Organism* a, Organism* b, int log_type, World* world)
 {
 	ostringstream tmpmsg;
@@ -145,8 +157,8 @@ void World::CreateLog(Organism* a, Organism* b, int log_type, World* world)
 		finalmsg = tmpmsg.str();
 		break;
 	case BREEDTIME:
-		tmpmsg << "-NIEUDANA PROBA ROZMNOZENIA: " << ac << " na polu x: " << STR(b->GetCoordinates().first + 1) << " y: " << STR(b->GetCoordinates().second + 1);
-		finalmsg = tmpmsg.str();
+		//tmpmsg << "-NIEUDANA PROBA ROZMNOZENIA: " << ac << " na polu x: " << STR(b->GetCoordinates().first + 1) << " y: " << STR(b->GetCoordinates().second + 1);
+		//finalmsg = tmpmsg.str();
 		break;
 	case BLOCK:
 		tmpmsg<<"-BLOK: "<<ac<< " zablokowal atak "<<bc<< " na polu x: " << STR(b->GetCoordinates().first + 1) << " y: " << STR(b->GetCoordinates().second + 1);
@@ -186,4 +198,11 @@ void World::PrintLogs(World* world)
 	cout << "\nILOSC ZWIERZAT:" << world->GetCreaturesArray().size();
 
 
+}
+World::~World()
+{
+	
+	for (int i = 0; i < GetWorldX(); i++)
+		delete worldBoard[i];
+	delete[] worldBoard;
 }
