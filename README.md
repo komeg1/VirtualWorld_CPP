@@ -7,7 +7,7 @@ College assignment - Create simulation of virtual world that contains various an
 The simulator is a turn-based game. It contains various animals and plants. Each organism has defined strength and initiative.
 Initiative tells which organism moves in what order. 
 
-If there's collision animal with bigger strength win (unless it has a default action method [TABLE BELOW] ). If they have the same strength, the one with longer lifetime wins.
+Animals can move in each round. Plants can spread in each round. If there's collision animal with bigger strength win (unless it has a default action method [TABLE BELOW] ). If they have the same strength, the one with longer lifetime wins.
 
 All the functions of the game are in Polish.
 
