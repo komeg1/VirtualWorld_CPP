@@ -23,7 +23,7 @@ void GameFunctions::StartGame()
     int n;
     cout <<"                                    Tomasz Krezymon, ETI, Informatyka, 189642\n                                           Projekt Wirtualnego Swiata";
     cout << "\n\n                               1. Podaj ilosc zwierzat i roslin";
-    cout << "\n                               Podaj opcjê: ";
+    cout << "\n                               Podaj opcje: ";
     cin >> n;
     switch (n) {
     case 1:
