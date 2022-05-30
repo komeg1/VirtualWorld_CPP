@@ -21,8 +21,10 @@ using namespace std;
 void GameFunctions::StartGame()
 {
     int n;
-    cout <<"                                    Tomasz Krezymon, ETI, Informatyka, 189642\n                                           Projekt Wirtualnego Swiata";
-    cout << "\n\n                               1. Podaj ilosc zwierzat i roslin";
+    cout << "                                    Tomasz Krezymon, ETI, Informatyka, 189642\n                                           Projekt Wirtualnego Swiata";
+    cout << "\n\n                               1. Podaj wielkosc swiata oraz ilosc kazdego zwierzecia";
+    cout << "\n\n                               2. Podaj wielkosc swiata. Kazdego organizmu bedzie po 2 sztuki";
+    cout << "\n\n                               3. Wczytaj stan gry z pliku";
     cout << "\n                               Podaj opcje: ";
     cin >> n;
     switch (n) {
@@ -45,48 +47,48 @@ void GameFunctions::CreateRandomGame() {
     int worldSizeY = 0;
     cout << "Podaj X i Y swiata";
     cin >> worldSizeX >> worldSizeY;
-    StartSimulation(PrepareWorld(2,2,2,2,2, worldSizeX, worldSizeY));
+    StartSimulation(PrepareWorld(2, 2, 2, 2, 2, worldSizeX, worldSizeY));
 }
 void GameFunctions::CreateGame() {
     system("CLS");
     NAME;
-    
+
     int wolfAmount = 0;
     int sheepAmount = 0;
     int foxAmount = 0;
     int turtleAmount = 0;
     int antelopeAmount = 0;
-    int worldSizeX=0;
-    int worldSizeY=0;
+    int worldSizeX = 0;
+    int worldSizeY = 0;
     cout << "Podaj X i Y swiata";
-    cin >> worldSizeX>>worldSizeY;
+    cin >> worldSizeX >> worldSizeY;
     system("CLS");
     NAME;
-    cout << "Podaj liczbê wilkow: ";
+    cout << "Podaj liczbe wilkow: ";
     cin >> wolfAmount;
     system("CLS");
     NAME;
-    cout << "Podaj liczbê owiec: ";
+    cout << "Podaj liczbe owiec: ";
     cin >> sheepAmount;
     system("CLS");
     NAME;
-    cout << "Podaj liczbê lisow: ";
+    cout << "Podaj liczbe lisow: ";
     cin >> foxAmount;
     system("CLS");
     NAME;
-    cout << "Podaj liczbê zolwi: ";
+    cout << "Podaj liczbe zolwi: ";
     cin >> turtleAmount;
     system("CLS");
     NAME;
-    cout << "Podaj liczbê antylop: ";
+    cout << "Podaj liczbe antylop: ";
     cin >> antelopeAmount;
-    StartSimulation(PrepareWorld(wolfAmount,sheepAmount,foxAmount,turtleAmount,antelopeAmount,worldSizeX,worldSizeY));
+    StartSimulation(PrepareWorld(wolfAmount, sheepAmount, foxAmount, turtleAmount, antelopeAmount, worldSizeX, worldSizeY));
 }
 
 
-World* GameFunctions::PrepareWorld(int wolfAmount, int sheepAmount, int foxAmount,int turtleAmount,int antelopeAmount,int worldSizeX, int worldSizeY) {
-    World* world = new World(worldSizeX,worldSizeY);
-    int x=-1, y=-1;
+World* GameFunctions::PrepareWorld(int wolfAmount, int sheepAmount, int foxAmount, int turtleAmount, int antelopeAmount, int worldSizeX, int worldSizeY) {
+    World* world = new World(worldSizeX, worldSizeY);
+    int x = -1, y = -1;
     for (int i = 0; i < 2; i++)
     {
         do {
@@ -103,9 +105,9 @@ World* GameFunctions::PrepareWorld(int wolfAmount, int sheepAmount, int foxAmoun
             x = rand() % worldSizeX;
             y = rand() % worldSizeY;
 
-        } while (world->worldBoard[y][x]!=FIELD);
-        
-        Wolf* wolf = new Wolf(x , y , world);
+        } while (world->worldBoard[y][x] != FIELD);
+
+        Wolf* wolf = new Wolf(x, y, world);
     }
     for (int i = 0; i < sheepAmount; i++)
     {
@@ -114,7 +116,7 @@ World* GameFunctions::PrepareWorld(int wolfAmount, int sheepAmount, int foxAmoun
             y = rand() % worldSizeY;
 
         } while (world->worldBoard[y][x] != FIELD);
-        Sheep* sheep = new Sheep(x , y , world);
+        Sheep* sheep = new Sheep(x, y, world);
     }
     for (int i = 0; i < foxAmount; i++)
     {
@@ -123,8 +125,8 @@ World* GameFunctions::PrepareWorld(int wolfAmount, int sheepAmount, int foxAmoun
             y = rand() % worldSizeY;
 
         } while (world->worldBoard[y][x] != FIELD);
-        
-        Fox* fox = new Fox(x , y , world);
+
+        Fox* fox = new Fox(x, y, world);
     }
     for (int i = 0; i < turtleAmount; i++)
     {
@@ -146,7 +148,7 @@ World* GameFunctions::PrepareWorld(int wolfAmount, int sheepAmount, int foxAmoun
 
         Antelope* fox = new Antelope(x, y, world);
     }
-  
+
     for (int i = 0; i < 5; i++)
     {
         do {
@@ -157,7 +159,7 @@ World* GameFunctions::PrepareWorld(int wolfAmount, int sheepAmount, int foxAmoun
 
         Grass* fox = new Grass(x, y, world);
     }
-    for (int i = 0; i <2; i++)
+    for (int i = 0; i < 2; i++)
     {
         do {
             x = rand() % worldSizeX;
@@ -177,7 +179,7 @@ World* GameFunctions::PrepareWorld(int wolfAmount, int sheepAmount, int foxAmoun
 
         Guarana* fox = new Guarana(x, y, world);
     }
-     for (int i = 0; i < 2; i++)
+    for (int i = 0; i < 2; i++)
     {
         do {
             x = rand() % worldSizeX;
@@ -207,20 +209,20 @@ void GameFunctions::StartSimulation(World* world)
     while (1)
     {
         world->NextTurn();
-        
+
     }
 }
 
 void GameFunctions::SaveToFile(World* world)
 {
     ofstream SAVE("SAVE.TXT");
-    SAVE << world->GetWorldX() <<" "<< world->GetWorldY()<<" "<< world->GetTurn()<<"\n";
+    SAVE << world->GetWorldX() << " " << world->GetWorldY() << " " << world->GetTurn() << "\n";
     for (int i = 0; i < world->GetCreaturesArray().size(); i++)
     {
         Organism* a = world->GetCreaturesArray()[i];
         SAVE << a->GetSign() << " "
             << a->GetStrength() << " "
-            << a->GetInitiative() <<" "
+            << a->GetInitiative() << " "
             << a->GetCoordinates().first << " "
             << a->GetCoordinates().second << " "
             << a->GetlifeTime() << " "
@@ -232,10 +234,10 @@ void GameFunctions::SaveToFile(World* world)
         SAVE << "\n";
 
 
-        
+
     }
     SAVE.close();
-   
+
 }
 
 void GameFunctions::ReadGameFromFile()
@@ -244,13 +246,13 @@ void GameFunctions::ReadGameFromFile()
     if (READ.is_open())
     {
         char sign;
-        int x, y, strength, initiative, lifetime, breedingTimeout, skillTimeout, skillTurnLeft,turn;
+        int x, y, strength, initiative, lifetime, breedingTimeout, skillTimeout, skillTurnLeft, turn;
         bool skillIsActive;
         READ >> x >> y >> turn;
         World* world = new World(x, y, turn);
         while (READ >> sign >> strength >> initiative >> x >> y >> lifetime >> breedingTimeout)
         {
-            if(sign == '#')
+            if (sign == '#')
                 Borscht* plant = new Borscht(world, sign, strength, initiative, make_pair(x, y), lifetime, breedingTimeout);
             if (sign == '!')
                 Nightshade* plant = new Nightshade(world, sign, strength, initiative, make_pair(x, y), lifetime, breedingTimeout);
@@ -273,7 +275,7 @@ void GameFunctions::ReadGameFromFile()
             if (sign == 'H')
             {
                 READ >> skillIsActive >> skillTimeout >> skillTurnLeft;
-                Human* wolf = new Human(world, sign, strength, initiative, make_pair(x, y), lifetime, breedingTimeout,skillIsActive,skillTimeout,skillTurnLeft);
+                Human* wolf = new Human(world, sign, strength, initiative, make_pair(x, y), lifetime, breedingTimeout, skillIsActive, skillTimeout, skillTurnLeft);
             }
         }
         StartSimulation(world);
