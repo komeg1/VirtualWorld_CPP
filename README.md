@@ -1,5 +1,5 @@
 # VirtualWorld_CPP
-College assignment - Create simulation of virtual world that contains various animals and plants with different behavior using C++ OOP
+College assignment - Create a simulation of a virtual world that contains various animals and plants with different behavior using C++ OOP
 
 
 ## Description
